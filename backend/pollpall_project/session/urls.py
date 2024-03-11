@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import SessionView
+from .views import SessionDetail
+from .views import SessionList
 
 urlpatterns = [
-    path('sessions/', SessionView.as_view(), name='session-list'),
-    path('sessions/<int:session_id>/', SessionView.as_view(), name='session-detail'),
+    path('sessions/', SessionList.as_view(), name='session-list'),
+    path('sessions/<int:session_id>/', SessionDetail.as_view(), name='session-detail'),
 ]
