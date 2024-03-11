@@ -1,33 +1,37 @@
+from django.urls import reverse
 from rest_framework.test import APIRequestFactory
-from django.test import TestCase
+from django.test import Client, TestCase
 
 from .models import Session
-from .views import SessionDetail
+from .views import Session
+
+SESSION_POST = reverse('pollpal:session-list-create')
 
 class TestSessionDetail(TestCase):
+    def setUp(self):
+        self.client = Client()
+
     def test_create_session(self):
-        factory = APIRequestFactory()
 
-        Session.objects.create(session_id = '123', session_label = 'first session')
+        # Arrange
+        sessionId = 123
 
-        url = '/sessions/{}/'.format(Session.session_id)
-        request = factory.get(url)
-        view = SessionDetail.as_view()
-        response = view(request, pk=Session.session_id)
+        # Act
+        response = self.client.post(SESSION_POST, {'session_id': sessionId, 'session_label': 'first session'}, format = 'json')
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['session_id'], Session.session_id)
-        self.assertEqual(response.data['session_label'], Session.session_label)
+        # Assert
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(Session.objects.filter(session_id=sessionId).exists())
 
     def test_delete_session(self):
-        factory = APIRequestFactory()
 
-        Session.objects.create(session_id = '123', session_label = 'test session')
-        url = '/sessions/{}/'.format(Session.session_id)
-        request = factory.delete(url)
+        # Arrange 
+        sessionId = 123
+        self.client.post(SESSION_POST, {'session_id': sessionId, 'session_label': 'first session'}, format = 'json')
 
-        view = SessionDetail.as_view()
-        response = view(request, pk = Session.session_id)
+        # Act
+        response = self.client.delete(reverse('pollpal:session-delete', kwargs = {'session_id': sessionId}))
 
+        # Assert
         self.assertEqual(response.status_code, 204)
-        self.assertFalse(Session.objects.filter(pk=Session.pk).exists())
+        self.assertFalse(Session.objects.filter(session_id=sessionId).exists())

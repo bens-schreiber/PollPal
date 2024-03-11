@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import SessionDetail
-from .views import SessionList
+from .views import SessionDestroy, SessionListCreate
+app_name = 'pollpal'
 
 urlpatterns = [
-    path('sessions/', SessionList.as_view(), name='session-list'),
-    path('sessions/<int:session_id>/', SessionDetail.as_view(), name='session-detail'),
+    path('session/', SessionListCreate.as_view(), name='session-list-create'),
+    path('session/<int:session_id>', SessionDestroy.as_view(), name='session-delete'),
 ]
