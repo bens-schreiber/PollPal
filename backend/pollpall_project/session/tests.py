@@ -1,9 +1,8 @@
 from django.urls import reverse
-from rest_framework.test import APIRequestFactory
 from django.test import Client, TestCase
 
-from .models import Session
-from .views import Session
+from session.models import Session, Question
+from session.views import Session
 
 SESSION_POST = reverse('pollpal:session-list-create')
 
@@ -35,3 +34,27 @@ class TestSessionDetail(TestCase):
         # Assert
         self.assertEqual(response.status_code, 204)
         self.assertFalse(Session.objects.filter(session_id=sessionId).exists())
+
+class TestQuestionModel(TestCase):
+    
+    @classmethod
+    def setUpTest(cls): # To set up for each test in the class
+        session = Session.objects.create(session_id=123, session_label='Test Session')
+        
+        Question.objects.create(questionID=1, question_text='Test question', session=session)
+        
+    def test_question_str_method(self):
+        question = Question.objects.get(questionID=1)
+        expected_result = "1: Test question: 1: Test Session"
+        self.assertEqual(str(question), expected_result)
+
+    def test_question_has_session(self):
+        question = Question.objects.get(questionID=1)
+        self.assertEqual(question.session.session_label, 'Test Session')
+
+    def test_delete_session_cascades(self):
+        session = Session.objects.get(session_label='Test Session')
+        session.delete()
+        self.assertFalse(Question.objects.filter(questionID=1).exists())
+
+    
