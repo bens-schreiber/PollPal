@@ -13,4 +13,10 @@ class Question(models.Model): # Just holds a question ID and the question
     session = models.ForeignKey(Session, on_delete=models.CASCADE) # If session is deleted, also delete question from database.
     
     def __str__(self):
-        return f"{self.questionID}: {self.question_text}: {self.session}"
+        return f"{self.question_id}: {self.prompt}: {self.session}"
+
+class Response(models.Model): # Holds a response and whether it is the correct answer or not.
+    response_id = models.IntegerField(primary_key=True)
+    prompt = models.CharField(max_length=0xFFF)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE) # If question is deleted, delete the responses attached to it.
+    is_correct = models.BooleanField(default=False)
