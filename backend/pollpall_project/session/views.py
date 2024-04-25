@@ -62,6 +62,9 @@ class PollService():
 
 # TODO
 class SessionService():
+    
+    # Figure out how question and responses will be handled BEFORE poll starts.
+    
     @staticmethod
     def startSession(session_id, initial_question):
         try:
