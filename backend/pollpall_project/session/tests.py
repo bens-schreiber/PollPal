@@ -1,8 +1,8 @@
 from django.urls import reverse
 from django.test import Client, TestCase
 
-from session.models import Session, Question
-from session.views import Session
+from .models import Session, Question
+from .views import Session
 
 SESSION_POST = reverse('pollpal:session-list-create')
 
@@ -38,14 +38,13 @@ class TestSessionDetail(TestCase):
 class TestQuestionModel(TestCase):
     
     @classmethod
-    def setUpTest(cls): # To set up for each test in the class
+    def setUpTestData(cls): # To set up for each test in the class
         session = Session.objects.create(session_id=123, session_label='Test Session')
-        
         Question.objects.create(questionID=1, question_text='Test question', session=session)
-        
+    
     def test_question_str_method(self):
         question = Question.objects.get(questionID=1)
-        expected_result = "1: Test question: 1: Test Session"
+        expected_result = "1: Test question: 123: Test Session"
         self.assertEqual(str(question), expected_result)
 
     def test_question_has_session(self):
@@ -56,5 +55,3 @@ class TestQuestionModel(TestCase):
         session = Session.objects.get(session_label='Test Session')
         session.delete()
         self.assertFalse(Question.objects.filter(questionID=1).exists())
-
-    
