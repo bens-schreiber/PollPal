@@ -2,19 +2,19 @@
 
 from django.db import migrations, models
 
+
 class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Session',
+            name="Session",
             fields=[
-                ('session_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('session_label', models.CharField(max_length=255)),
+                ("session_id", models.IntegerField(primary_key=True, serialize=False)),
+                ("session_label", models.CharField(max_length=255)),
             ],
         ),
     ]

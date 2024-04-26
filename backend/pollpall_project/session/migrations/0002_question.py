@@ -7,16 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('session', '0001_initial'),
+        ("session", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('questionID', models.IntegerField(primary_key=True, serialize=False)),
-                ('question_text', models.CharField(max_length=255)),
-                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='session.session')),
+                ("questionID", models.IntegerField(primary_key=True, serialize=False)),
+                ("question_text", models.CharField(max_length=255)),
+                (
+                    "session",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="session.session",
+                    ),
+                ),
             ],
         ),
     ]
