@@ -4,9 +4,10 @@ import os
 import sys
 import django
 
+
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pollpall_project.settings')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pollpall_project.settings")
 
     try:
         django.setup()
@@ -20,5 +21,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
