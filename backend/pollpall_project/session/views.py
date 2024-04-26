@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .models import Session
+from .models import Session, Question, Response, Poll
 from .serializers import SessionSerializer
 
 class SessionListCreate(generics.ListCreateAPIView):
