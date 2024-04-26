@@ -35,4 +35,5 @@ jobs:
         black . --check
     - name: Run Tests
       run: |
+        cd pollpall_project
         python manage.py test
