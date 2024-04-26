@@ -8,50 +8,68 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Poll',
+            name="Poll",
             fields=[
-                ('poll_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('question_id', models.IntegerField(default=-1)),
-                ('is_accepting_answers', models.BooleanField(default=False)),
+                ("poll_id", models.IntegerField(primary_key=True, serialize=False)),
+                ("question_id", models.IntegerField(default=-1)),
+                ("is_accepting_answers", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='Session',
+            name="Session",
             fields=[
-                ('session_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('session_label', models.CharField(max_length=255)),
+                ("session_id", models.IntegerField(primary_key=True, serialize=False)),
+                ("session_label", models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('question_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('prompt', models.CharField(default='', max_length=4095)),
-                ('poll', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='related_questions', to='session.poll')),
+                ("question_id", models.IntegerField(primary_key=True, serialize=False)),
+                ("prompt", models.CharField(default="", max_length=4095)),
+                (
+                    "poll",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="related_questions",
+                        to="session.poll",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='poll',
-            name='related_question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='related_polls', to='session.question'),
+            model_name="poll",
+            name="related_question",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="related_polls",
+                to="session.question",
+            ),
         ),
         migrations.CreateModel(
-            name='Response',
+            name="Response",
             fields=[
-                ('response_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('prompt', models.CharField(default='', max_length=4095)),
-                ('is_correct', models.BooleanField(default=False)),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='session.question')),
+                ("response_id", models.IntegerField(primary_key=True, serialize=False)),
+                ("prompt", models.CharField(default="", max_length=4095)),
+                ("is_correct", models.BooleanField(default=False)),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="session.question",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='poll',
-            name='session',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='session.session'),
+            model_name="poll",
+            name="session",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="session.session"
+            ),
         ),
     ]
