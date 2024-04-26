@@ -1,4 +1,4 @@
-name: Format prettier
+name: NPM Run Prettier Formatter
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build-npm:
+  prettier-formatter:
     runs-on: ubuntu-latest
 
     defaults:
