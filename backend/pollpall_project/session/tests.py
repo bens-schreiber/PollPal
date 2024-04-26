@@ -1,8 +1,7 @@
 from django.urls import reverse
-from rest_framework.test import APIRequestFactory
 from django.test import Client, TestCase
 
-from .models import Session
+from .models import Session, Question
 from .views import Session
 
 SESSION_POST = reverse('pollpal:session-list-create')
