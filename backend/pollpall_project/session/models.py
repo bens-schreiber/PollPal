@@ -1,5 +1,4 @@
 from django.db import models
-from .models import Question
 
 class Session(models.Model):
     session_id = models.IntegerField(primary_key=True)
@@ -24,7 +23,7 @@ class Poll(models.Model):
 
 class Question(models.Model): # Just holds a question ID and the question
     question_id = models.IntegerField(primary_key=True) 
-    prompt = models.CharField(max_length=0xFFF)
+    prompt = models.CharField(max_length=0xFFF, default = '')
     related_poll = models.ForeignKey('Poll', on_delete=models.CASCADE, related_name='related_questions') # If poll is deleted, also delete question from database.
     
     def __str__(self):
@@ -32,7 +31,7 @@ class Question(models.Model): # Just holds a question ID and the question
 
 class Response(models.Model): # Holds a response and whether it is the correct answer or not.
     response_id = models.IntegerField(primary_key=True)
-    prompt = models.CharField(max_length=0xFFF)
+    prompt = models.CharField(max_length=0xFFF, default = '')
     # Foreign key should cover One-to-Many connection
     question = models.ForeignKey('Question', on_delete=models.CASCADE) # Connects Response to Question.
     is_correct = models.BooleanField(default=False)
