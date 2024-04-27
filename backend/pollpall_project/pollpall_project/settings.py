@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "drf_spectacular",
     "session",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -51,7 +52,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-REST_FRAMEWORK = {"TEST_REQUEST_DEFAULT_FORMAT": "json"}
+REST_FRAMEWORK = {
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 ROOT_URLCONF = "pollpall_project.urls"
 
@@ -102,6 +106,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Swagger Settings
+SPECTACULAR_SETTINGS = {
+    "TITLE": "PollPal API",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
