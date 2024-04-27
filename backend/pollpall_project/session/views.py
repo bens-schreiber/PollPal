@@ -13,3 +13,4 @@ class SessionDestroy(generics.DestroyAPIView):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
     lookup_field = "session_id"
+
