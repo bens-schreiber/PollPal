@@ -1,5 +1,4 @@
 from django.db import models
-from .models import Question
 
 class Session(models.Model):
     session_id = models.IntegerField(primary_key=True)
