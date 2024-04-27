@@ -1,8 +1,8 @@
 from django.urls import reverse
 from django.test import Client, TestCase
 
-from .models import Session, Question
-from .views import Session
+from .models import Poll, Session, Question
+from .views import Session, SessionService
 
 SESSION_POST = reverse("pollpal:session-list-create")
 
@@ -45,3 +45,27 @@ class TestSessionDetail(TestCase):
         # Assert
         self.assertEqual(response.status_code, 204)
         self.assertFalse(Session.objects.filter(session_id=sessionId).exists())
+
+class TestSessionService(TestCase):
+    def setUp(self):
+        self.client = Client()
+        
+    def test_start_session(self):
+        
+        #Arrange
+        sessionID = 123
+        pollID = 456
+        questionID = 789
+        self.client.post(SESSION_POST, {'session_id': sessionID, 'session_label': 'first session'}, format = 'json')
+        poll = Poll.objects.create(
+            poll_id = pollID,
+        )
+        question = Question.objects.create(
+            question_id = questionID,
+            prompt = 'Test prompt',
+            related_poll = Poll.objects.get(poll_id = pollID)
+        )
+        #Act    
+        response = SessionService.startSession(self, sessionID, question)
+        self.assertEqual(response.status_code, 201)
+        
