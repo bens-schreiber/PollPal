@@ -45,11 +45,11 @@ class Question(models.Model):
     question_id = models.IntegerField(primary_key=True)
     prompt = models.CharField(max_length=0xFFF, default="")
     poll = models.ForeignKey(
-        "Poll", on_delete=models.CASCADE, related_name="related_questions"
+        "Poll", on_delete=models.CASCADE, related_name="related_questions", default=None
     )
 
     def __str__(self):
-        return f"{self.question_id}: {self.prompt}: {self.related_poll}"
+        return f"{self.question_id}: {self.prompt}: {self.poll}"
 
 
 class Response(models.Model):

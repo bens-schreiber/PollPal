@@ -21,14 +21,15 @@ class SessionService():
         try:
             session = Session.objects.get(session_id = sessionid)
         except:
+                print("Session does not exist")
                 return JsonResponse({'error': 'Session does not exist'}, status=400)
     
         if Poll.objects.filter(session=session).exists():
+            print("Session has a poll")
             return JsonResponse({'error': 'Session already has a poll'}, status=400)
               
         new_poll = Poll.objects.create(
             session = session,
-            question_id = Question.objects.get(question).question_id,
             related_question = question,
             is_accepting_answers = True
         )

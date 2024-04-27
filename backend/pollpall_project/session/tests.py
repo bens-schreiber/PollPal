@@ -54,17 +54,14 @@ class TestSessionService(TestCase):
         
         #Arrange
         sessionID = 123
-        pollID = 456
         questionID = 789
         self.client.post(SESSION_POST, {'session_id': sessionID, 'session_label': 'first session'}, format = 'json')
-        poll = Poll.objects.create(
-            poll_id = pollID,
-        )
+        
         question = Question.objects.create(
             question_id = questionID,
             prompt = 'Test prompt',
-            related_poll = Poll.objects.get(poll_id = pollID)
         )
+        
         #Act    
         response = SessionService.startSession(self, sessionID, question)
         self.assertEqual(response.status_code, 201)
