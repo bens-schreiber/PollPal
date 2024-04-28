@@ -76,7 +76,7 @@ class Response(models.Model):
     """
 
     answer = models.OneToOneField("Answer", on_delete=models.CASCADE)
-    poll = models.OneToOneField("Poll", on_delete=models.CASCADE)
+    poll = models.ForeignKey("Poll", on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
