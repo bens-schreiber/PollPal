@@ -7,9 +7,6 @@ paths:
   /api/session/:
     get:
       operationId: session_list
-      tags:
-      - session
-      security:
       - cookieAuth: []
       - basicAuth: []
       - {}
