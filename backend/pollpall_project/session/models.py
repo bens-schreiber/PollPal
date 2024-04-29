@@ -53,6 +53,7 @@ class Answer(models.Model):
 
     Attributes
     answer (str): Text of the answer
+    response (Response): Each response will have one Answer
     question (Question): The question this answer is connected to
     is_correct (bool): Whether this answer is correct or not
     """
