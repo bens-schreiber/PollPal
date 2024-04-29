@@ -6,7 +6,9 @@ info:
 paths:
   /api/session/:
     get:
-      operationId: root_list
+      operationId: session_list
+      tags:
+      - session
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -21,7 +23,9 @@ paths:
                   $ref: '#/components/schemas/Session'
           description: ''
     post:
-      operationId: root_create
+      operationId: session_create
+      tags:
+      - session
       requestBody:
         content:
           application/json:
@@ -47,13 +51,15 @@ paths:
           description: ''
   /api/session/{session_id}:
     delete:
-      operationId: root_destroy
+      operationId: session_destroy
       parameters:
       - in: path
         name: session_id
         schema:
           type: integer
         required: true
+      tags:
+      - session
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -66,17 +72,15 @@ components:
     Session:
       type: object
       properties:
-        session_id:
+        id:
           type: integer
-          maximum: 9223372036854775807
-          minimum: -9223372036854775808
-          format: int64
-        session_label:
+          readOnly: true
+        label:
           type: string
           maxLength: 255
       required:
-      - session_id
-      - session_label
+      - id
+      - label
   securitySchemes:
     basicAuth:
       type: http
