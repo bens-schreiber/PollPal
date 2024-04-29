@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "drf_spectacular",
     "session",
     "django.contrib.admin",
     "django.contrib.auth",

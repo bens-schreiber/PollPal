@@ -26,7 +26,6 @@ class Poll(models.Model):
     """
 
     session = models.OneToOneField("Session", on_delete=models.CASCADE)
-    question = models.OneToOneField("Question", on_delete=models.CASCADE)
     is_accepting_answers = models.BooleanField(default=False)
 
     def __str__(self):
@@ -42,6 +41,7 @@ class Question(models.Model):
     """
 
     prompt = models.CharField(max_length=0xFFF, default="")
+    poll = models.OneToOneField("Poll", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.prompt}"
@@ -58,7 +58,8 @@ class Answer(models.Model):
     """
 
     answer = models.CharField(max_length=0xFFF, default="")
-    question = models.ForeignKey("Question", on_delete=models.CASCADE)
+    response = models.OneToOneField("Response", on_delete=models.CASCADE)
+    question = models.ForeignKey("Question", on_delete=models.CASCADE, null=True)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
@@ -75,9 +76,8 @@ class Response(models.Model):
     is_correct (bool): Whether the response was correct or not
     """
 
-    answer = models.OneToOneField("Answer", on_delete=models.CASCADE)
     poll = models.ForeignKey("Poll", on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.answer}: {self.is_correct}"
+        return f"{self.is_correct}"
