@@ -59,7 +59,7 @@ class Answer(models.Model):
 
     answer = models.CharField(max_length=0xFFF, default="")
     response = models.OneToOneField("Response", on_delete=models.CASCADE)
-    question = models.ForeignKey("Question", on_delete=models.CASCADE, null=True)
+    question = models.ForeignKey("Question", on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
