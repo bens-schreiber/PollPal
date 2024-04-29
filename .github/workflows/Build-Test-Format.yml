@@ -85,7 +85,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python manage.py spectacular --color --file fresh-schema.yml
-          diff file1.txt file2.txt > /dev/null
+          diff schema.yml fresh-schema.yml > /dev/null
           if [ $? -ne 0 ]; then
             echo "Files are different, run 'python manage.py spectacular --file schema.yml' to update the schema"
             exit 1
