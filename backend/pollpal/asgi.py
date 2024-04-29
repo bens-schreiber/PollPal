@@ -1,5 +1,5 @@
 """
-ASGI config for pollpall_project project.
+ASGI config for pollpal project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pollpall_project.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pollpal.settings")
 
 application = get_asgi_application()

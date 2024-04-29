@@ -58,7 +58,6 @@ jobs:
           pip install -r requirements.txt
       - name: Run Tests
         run: |
-          cd pollpall_project
           python manage.py test
 
   prettier-formatter:
