@@ -1,5 +1,5 @@
 """
-URL configuration for pollpall_project project.
+URL configuration for pollpal project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -17,11 +17,13 @@ Including another URLconf
 
 from django.urls import path, include
 from drf_spectacular.views import (
+    SpectacularAPIView,
     SpectacularSwaggerView,
 )
 
 urlpatterns = [
     path("api/", include("session.urls")),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path(
         "api/schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),

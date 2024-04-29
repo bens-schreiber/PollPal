@@ -7,7 +7,7 @@ import django
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pollpall_project.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pollpal.settings")
 
     try:
         django.setup()
