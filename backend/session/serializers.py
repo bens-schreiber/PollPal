@@ -3,11 +3,10 @@ from .models import Session, Poll, Question, Response, Answer
 
 
 class SessionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Session
         fields = "__all__"
-
-    lookup_field = "session_id"
 
 
 class PollSerializer(serializers.ModelSerializer):
