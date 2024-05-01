@@ -1,3 +1,6 @@
 # Ignore artifacts:
 build
 coverage
+
+# generated files
+src/Api/*
