@@ -19,10 +19,8 @@ class SessionDestroy(generics.DestroyAPIView):
 class SessionManager(APIView):
     def post(self, request, format=None):
         session_data = request.data.get("session")
-        print(session_data)
         question_data = request.data.get("question")
 
-        # Deserialize the data
         session_serializer = SessionSerializer(data=session_data)
         question_serializer = QuestionSerializer(data=question_data)
 
@@ -30,7 +28,7 @@ class SessionManager(APIView):
         question_serializer.is_valid(raise_exception=True)
 
         question = question_serializer.save()
-        session = session_serializer.save()
+        session = Session.objects.get(pk=session_data["id"])
 
         poll = Poll.objects.create(session=session, is_accepting_answers=True)
 
