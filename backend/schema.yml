@@ -4,6 +4,50 @@ info:
   version: 1.0.0
   description: Your project description
 paths:
+  /api/question/:
+    get:
+      operationId: question_list
+      tags:
+      - question
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+          description: ''
+    post:
+      operationId: question_create
+      tags:
+      - question
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
   /api/session/:
     get:
       operationId: session_list
@@ -67,8 +111,51 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/session/start:
+    post:
+      operationId: session_start_create
+      description: Creates a poll for the session with the provided question and answer.
+      tags:
+      - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionStart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SessionStart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SessionStart'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStart'
+          description: ''
 components:
   schemas:
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        prompt:
+          type: string
+          maxLength: 4095
+        poll:
+          type: integer
+          nullable: true
+      required:
+      - id
     Session:
       type: object
       properties:
@@ -81,6 +168,16 @@ components:
       required:
       - id
       - label
+    SessionStart:
+      type: object
+      properties:
+        session:
+          type: integer
+        question:
+          type: integer
+      required:
+      - question
+      - session
   securitySchemes:
     basicAuth:
       type: http
