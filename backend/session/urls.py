@@ -6,5 +6,6 @@ app_name = "pollpal"
 urlpatterns = [
     path("session/", SessionListCreate.as_view(), name="session-list-create"),
     path("session/<int:pk>", SessionDestroy.as_view(), name="session-delete"),
-    path("session/manager", SessionManager.as_view(), name="session-manage"),
+    path("session/start", SessionStart.as_view(), name="session-start"),
+    path("question/", QuestionListCreate.as_view(), name="question-list-create"),
 ]

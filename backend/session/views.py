@@ -1,9 +1,9 @@
 from rest_framework import generics
-from rest_framework.response import Response as _Response
-from rest_framework.views import APIView
+import rest_framework.response as rf
 from .models import *
 from .serializers import *
 from django.views import View
+from rest_framework.views import APIView
 
 
 class SessionListCreate(generics.ListCreateAPIView):
@@ -16,23 +16,21 @@ class SessionDestroy(generics.DestroyAPIView):
     serializer_class = SessionSerializer
 
 
-class SessionManager(APIView):
+class QuestionListCreate(generics.ListCreateAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+
+class SessionStart(APIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionStartSerializer
+
     def post(self, request, format=None):
-        session_data = request.data.get("session")
-        question_data = request.data.get("question")
+        """Creates a poll for the session with the provided question and answer."""
 
-        session_serializer = SessionSerializer(data=session_data)
-        question_serializer = QuestionSerializer(data=question_data)
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        session_serializer.is_valid(raise_exception=True)
-        question_serializer.is_valid(raise_exception=True)
+        poll = serializer.create(serializer.validated_data)
 
-        question = question_serializer.save()
-        session = Session.objects.get(pk=session_data["id"])
-
-        poll = Poll.objects.create(session=session, is_accepting_answers=True)
-
-        poll.save()
-        question.poll = poll
-        question.save()
-        return _Response(PollSerializer(poll).data, status=201)
+        return rf.Response(PollSerializer(poll).data, status=201)
