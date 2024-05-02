@@ -4,11 +4,55 @@ info:
   version: 1.0.0
   description: Your project description
 paths:
+  /api/question/:
+    get:
+      operationId: api_question_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+          description: ''
+    post:
+      operationId: api_question_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
   /api/session/:
     get:
-      operationId: session_list
+      operationId: api_session_list
       tags:
-      - session
+      - api
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -23,9 +67,9 @@ paths:
                   $ref: '#/components/schemas/Session'
           description: ''
     post:
-      operationId: session_create
+      operationId: api_session_create
       tags:
-      - session
+      - api
       requestBody:
         content:
           application/json:
@@ -51,7 +95,7 @@ paths:
           description: ''
   /api/session/{id}:
     delete:
-      operationId: session_destroy
+      operationId: api_session_destroy
       parameters:
       - in: path
         name: id
@@ -59,7 +103,7 @@ paths:
           type: integer
         required: true
       tags:
-      - session
+      - api
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -67,8 +111,65 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/session/end:
+    delete:
+      operationId: api_session_end_destroy
+      description: Deletes a Poll from a session. If there is no Poll, return 400.
+        If the poll is accepting answers, return 400.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/session/start:
+    post:
+      operationId: api_session_start_create
+      description: Creates a poll for the session with the provided question and answer.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionStart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SessionStart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SessionStart'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStart'
+          description: ''
 components:
   schemas:
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        prompt:
+          type: string
+          maxLength: 4095
+        poll:
+          type: integer
+          nullable: true
+      required:
+      - id
     Session:
       type: object
       properties:
@@ -81,6 +182,16 @@ components:
       required:
       - id
       - label
+    SessionStart:
+      type: object
+      properties:
+        session:
+          type: integer
+        question:
+          type: integer
+      required:
+      - question
+      - session
   securitySchemes:
     basicAuth:
       type: http
