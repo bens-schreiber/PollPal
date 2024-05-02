@@ -4,6 +4,7 @@ from .models import *
 from .serializers import *
 from django.views import View
 from rest_framework.views import APIView
+from django.http import HttpResponseBadRequest
 
 
 class SessionListCreate(generics.ListCreateAPIView):
@@ -34,3 +35,25 @@ class SessionStart(APIView):
         poll = serializer.create(serializer.validated_data)
 
         return rf.Response(PollSerializer(poll).data, status=201)
+
+
+class SessionEnd(APIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionEndSerializer
+
+    def delete(self, request, format=None):
+        """Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400."""
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        session: Session = serializer.save()
+        if not Poll.objects.filter(session=session.id).exists():
+            return HttpResponseBadRequest("Poll does not exist.")
+
+        poll: Poll = session.poll
+        if poll.is_accepting_answers:
+            return HttpResponseBadRequest("Poll is accepting answers.")
+
+        poll.delete()
+
+        return rf.Response(status=202)

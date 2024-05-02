@@ -48,3 +48,12 @@ class SessionStartSerializer(serializers.Serializer):
         question.poll = poll
         question.save()
         return poll
+
+
+class SessionEndSerializer(serializers.Serializer):
+    session = serializers.PrimaryKeyRelatedField(queryset=Session.objects.all())
+
+    def create(self, validated_data):
+
+        session: Session = validated_data.pop("session")
+        return session

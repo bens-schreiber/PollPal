@@ -8,4 +8,5 @@ urlpatterns = [
     path("session/<int:pk>", SessionDestroy.as_view(), name="session-delete"),
     path("session/start", SessionStart.as_view(), name="session-start"),
     path("question/", QuestionListCreate.as_view(), name="question-list-create"),
+    path("session/end", SessionEnd.as_view(), name="session-end"),
 ]
