@@ -6,9 +6,9 @@ info:
 paths:
   /api/question/:
     get:
-      operationId: question_list
+      operationId: api_question_list
       tags:
-      - question
+      - api
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -23,9 +23,9 @@ paths:
                   $ref: '#/components/schemas/Question'
           description: ''
     post:
-      operationId: question_create
+      operationId: api_question_create
       tags:
-      - question
+      - api
       requestBody:
         content:
           application/json:
@@ -50,9 +50,9 @@ paths:
           description: ''
   /api/session/:
     get:
-      operationId: session_list
+      operationId: api_session_list
       tags:
-      - session
+      - api
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -67,9 +67,9 @@ paths:
                   $ref: '#/components/schemas/Session'
           description: ''
     post:
-      operationId: session_create
+      operationId: api_session_create
       tags:
-      - session
+      - api
       requestBody:
         content:
           application/json:
@@ -95,7 +95,7 @@ paths:
           description: ''
   /api/session/{id}:
     delete:
-      operationId: session_destroy
+      operationId: api_session_destroy
       parameters:
       - in: path
         name: id
@@ -103,7 +103,21 @@ paths:
           type: integer
         required: true
       tags:
-      - session
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/session/end:
+    delete:
+      operationId: api_session_end_destroy
+      description: Deletes a Poll from a session. If there is no Poll, return 400.
+        If the poll is accepting answers, return 400.
+      tags:
+      - api
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -113,10 +127,10 @@ paths:
           description: No response body
   /api/session/start:
     post:
-      operationId: session_start_create
+      operationId: api_session_start_create
       description: Creates a poll for the session with the provided question and answer.
       tags:
-      - session
+      - api
       requestBody:
         content:
           application/json:
