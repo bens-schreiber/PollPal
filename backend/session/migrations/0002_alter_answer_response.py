@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('session', '0001_initial'),
+        ("session", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='answer',
-            name='response',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='session.response'),
+            model_name="answer",
+            name="response",
+            field=models.OneToOneField(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="session.response",
+            ),
         ),
     ]
