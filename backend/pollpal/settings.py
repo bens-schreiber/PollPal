@@ -57,6 +57,11 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        # "rest_framework.parsers.FormParser",
+        # "rest_framework.parsers.MultiPartParser",
+    ],
 }
 
 ROOT_URLCONF = "pollpal.urls"
@@ -116,7 +121,9 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Your project description",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    # OTHER SETTINGS
+    # Split components into request and response parts where appropriate
+    "COMPONENT_SPLIT_REQUEST": False,
+    "CAMELIZE_NAMES": False,
 }
 
 # Internationalization

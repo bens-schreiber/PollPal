@@ -81,21 +81,15 @@ cookieAuth.apiKey = "YOUR API KEY"
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //cookieAuth.apiKeyPrefix['sessionid'] = "Token"
 
-var api = new PollPalApi.SessionApi()
-var body = new PollPalApi.Session(); // {Session} 
-var id = 56; // {Number} 
-var label = "label_example"; // {String} 
-var id = 56; // {Number} 
-var label = "label_example"; // {String} 
+var api = new PollPalApi.PollApi()
+var poll_id = 56; // {Number} 
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.sessionCreate(body, id, label, id, label, callback);
+api.pollAnswerRetrieve(poll_id).then(function(data) {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
+
 ```
 
 ## Documentation for API Endpoints
@@ -104,13 +98,30 @@ All URIs are relative to */*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*PollPalApi.PollApi* | [**pollAnswerRetrieve**](docs/PollApi.md#pollAnswerRetrieve) | **GET** /api/poll/{poll_id}/answer | 
+*PollPalApi.PollApi* | [**pollNextQuestionCreate**](docs/PollApi.md#pollNextQuestionCreate) | **POST** /api/poll/next-question | 
+*PollPalApi.PollApi* | [**pollSetAcceptingAnswerPartialUpdate**](docs/PollApi.md#pollSetAcceptingAnswerPartialUpdate) | **PATCH** /api/poll/set-accepting-answer | 
+*PollPalApi.PollApi* | [**pollSubmitResponseUpdate**](docs/PollApi.md#pollSubmitResponseUpdate) | **PUT** /api/poll/submit-response | 
+*PollPalApi.QuestionApi* | [**questionCreateCreate**](docs/QuestionApi.md#questionCreateCreate) | **POST** /api/question/create | 
 *PollPalApi.SessionApi* | [**sessionCreate**](docs/SessionApi.md#sessionCreate) | **POST** /api/session/ | 
-*PollPalApi.SessionApi* | [**sessionDestroy**](docs/SessionApi.md#sessionDestroy) | **DELETE** /api/session/{session_id} | 
+*PollPalApi.SessionApi* | [**sessionDestroy**](docs/SessionApi.md#sessionDestroy) | **DELETE** /api/session/{id} | 
+*PollPalApi.SessionApi* | [**sessionEndDestroy**](docs/SessionApi.md#sessionEndDestroy) | **DELETE** /api/session/{session_id}/end | 
 *PollPalApi.SessionApi* | [**sessionList**](docs/SessionApi.md#sessionList) | **GET** /api/session/ | 
+*PollPalApi.SessionApi* | [**sessionStartCreate**](docs/SessionApi.md#sessionStartCreate) | **POST** /api/session/start | 
 
 ## Documentation for Models
 
+ - [PollPalApi.Answer](docs/Answer.md)
+ - [PollPalApi.PatchedPollSetAcceptingAnswers](docs/PatchedPollSetAcceptingAnswers.md)
+ - [PollPalApi.Poll](docs/Poll.md)
+ - [PollPalApi.PollNextQuestion](docs/PollNextQuestion.md)
+ - [PollPalApi.PollSubmitResponse](docs/PollSubmitResponse.md)
+ - [PollPalApi.Question](docs/Question.md)
+ - [PollPalApi.QuestionCreate](docs/QuestionCreate.md)
+ - [PollPalApi.QuestionCreateAnswerInput](docs/QuestionCreateAnswerInput.md)
+ - [PollPalApi.Response](docs/Response.md)
  - [PollPalApi.Session](docs/Session.md)
+ - [PollPalApi.SessionStart](docs/SessionStart.md)
 
 ## Documentation for Authorization
 

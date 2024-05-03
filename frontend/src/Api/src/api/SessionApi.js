@@ -13,7 +13,9 @@
  *
  */
 import ApiClient from "../ApiClient";
+import Poll from '../model/Poll';
 import Session from '../model/Session';
+import SessionStart from '../model/SessionStart';
 
 /**
 * Session service.
@@ -34,45 +36,18 @@ export default class SessionApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
-    /**
-     * Callback function to receive the result of the sessionCreate operation.
-     * @callback moduleapi/SessionApi~sessionCreateCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/Session{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+
 
     /**
      * @param {module:model/Session} body 
-     * @param {Number} id 
-     * @param {String} label 
-     * @param {Number} id 
-     * @param {String} label 
-     * @param {module:api/SessionApi~sessionCreateCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Session} and HTTP response
      */
-    sessionCreate(body, id, label, id, label, callback) {
+    sessionCreateWithHttpInfo(body) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
         throw new Error("Missing the required parameter 'body' when calling sessionCreate");
-      }
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling sessionCreate");
-      }
-      // verify the required parameter 'label' is set
-      if (label === undefined || label === null) {
-        throw new Error("Missing the required parameter 'label' when calling sessionCreate");
-      }
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling sessionCreate");
-      }
-      // verify the required parameter 'label' is set
-      if (label === undefined || label === null) {
-        throw new Error("Missing the required parameter 'label' when calling sessionCreate");
       }
 
       let pathParams = {
@@ -85,42 +60,47 @@ export default class SessionApi {
         
       };
       let formParams = {
-        'id': id,'label': label,'id': id,'label': label
+        
       };
 
       let authNames = ['basicAuth', 'cookieAuth'];
-      let contentTypes = ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
+      let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = Session;
 
       return this.apiClient.callApi(
         '/api/session/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
-    /**
-     * Callback function to receive the result of the sessionDestroy operation.
-     * @callback moduleapi/SessionApi~sessionDestroyCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
 
     /**
-     * @param {Number} sessionId 
-     * @param {module:api/SessionApi~sessionDestroyCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {<&vendorExtensions.x-jsdoc-type>} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Session}
      */
-    sessionDestroy(sessionId, callback) {
+    sessionCreate(body) {
+      return this.sessionCreateWithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * @param {Number} id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
+     */
+    sessionDestroyWithHttpInfo(id) {
       
       let postBody = null;
-      // verify the required parameter 'sessionId' is set
-      if (sessionId === undefined || sessionId === null) {
-        throw new Error("Missing the required parameter 'sessionId' when calling sessionDestroy");
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling sessionDestroy");
       }
 
       let pathParams = {
-        'session_id': sessionId
+        'id': id
       };
       let queryParams = {
         
@@ -138,24 +118,79 @@ export default class SessionApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/api/session/{session_id}', 'DELETE',
+        '/api/session/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
-    /**
-     * Callback function to receive the result of the sessionList operation.
-     * @callback moduleapi/SessionApi~sessionListCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Session>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
 
     /**
-     * @param {module:api/SessionApi~sessionListCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @param {<&vendorExtensions.x-jsdoc-type>} id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
-    sessionList(callback) {
+    sessionDestroy(id) {
+      return this.sessionDestroyWithHttpInfo(id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400.
+     * @param {Number} session_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
+     */
+    sessionEndDestroyWithHttpInfo(session_id) {
+      
+      let postBody = null;
+      // verify the required parameter 'session_id' is set
+      if (session_id === undefined || session_id === null) {
+        throw new Error("Missing the required parameter 'session_id' when calling sessionEndDestroy");
+      }
+
+      let pathParams = {
+        'session_id': session_id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/session/{session_id}/end', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400.
+     * @param {<&vendorExtensions.x-jsdoc-type>} session_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}
+     */
+    sessionEndDestroy(session_id) {
+      return this.sessionEndDestroyWithHttpInfo(session_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link Array.<module:model/Session>} and HTTP response
+     */
+    sessionListWithHttpInfo() {
       
       let postBody = null;
 
@@ -180,8 +215,69 @@ export default class SessionApi {
       return this.apiClient.callApi(
         '/api/session/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
+    }
+
+    /**
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link Array.<module:model/Session>}
+     */
+    sessionList() {
+      return this.sessionListWithHttpInfo()
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * Creates a poll for the session with the provided question and answer.
+     * @param {module:model/SessionStart} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
+     */
+    sessionStartCreateWithHttpInfo(body) {
+      
+      let postBody = body;
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling sessionStartCreate");
+      }
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = Poll;
+
+      return this.apiClient.callApi(
+        '/api/session/start', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Creates a poll for the session with the provided question and answer.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Poll}
+     */
+    sessionStartCreate(body) {
+      return this.sessionStartCreateWithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
     }
 
 }

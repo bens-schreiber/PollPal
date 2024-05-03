@@ -4,11 +4,17 @@ info:
   version: 1.0.0
   description: Your project description
 paths:
-  /api/question/:
+  /api/poll/{poll_id}/answer:
     get:
-      operationId: api_question_list
+      operationId: poll_answer_retrieve
+      parameters:
+      - in: path
+        name: poll_id
+        schema:
+          type: integer
+        required: true
       tags:
-      - api
+      - poll
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -18,31 +24,91 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Question'
+                $ref: '#/components/schemas/Answer'
           description: ''
+  /api/poll/next-question:
     post:
-      operationId: api_question_create
+      operationId: poll_next_question_create
       tags:
-      - api
+      - poll
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Question'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/PollNextQuestion'
+        required: true
       security:
       - cookieAuth: []
       - basicAuth: []
       - {}
       responses:
-        '201':
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Poll'
+          description: ''
+  /api/poll/set-accepting-answer:
+    patch:
+      operationId: poll_set_accepting_answer_partial_update
+      tags:
+      - poll
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswers'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Poll'
+          description: ''
+  /api/poll/submit-response:
+    put:
+      operationId: poll_submit_response_update
+      tags:
+      - poll
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PollSubmitResponse'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: ''
+  /api/question/create:
+    post:
+      operationId: question_create_create
+      description: Creates a question with the provided prompt and answers.
+      tags:
+      - question
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionCreate'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
           content:
             application/json:
               schema:
@@ -50,9 +116,9 @@ paths:
           description: ''
   /api/session/:
     get:
-      operationId: api_session_list
+      operationId: session_list
       tags:
-      - api
+      - session
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -67,18 +133,12 @@ paths:
                   $ref: '#/components/schemas/Session'
           description: ''
     post:
-      operationId: api_session_create
+      operationId: session_create
       tags:
-      - api
+      - session
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/Session'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Session'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/Session'
         required: true
@@ -95,7 +155,7 @@ paths:
           description: ''
   /api/session/{id}:
     delete:
-      operationId: api_session_destroy
+      operationId: session_destroy
       parameters:
       - in: path
         name: id
@@ -103,7 +163,7 @@ paths:
           type: integer
         required: true
       tags:
-      - api
+      - session
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -111,13 +171,19 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/session/end:
+  /api/session/{session_id}/end:
     delete:
-      operationId: api_session_end_destroy
+      operationId: session_end_destroy
       description: Deletes a Poll from a session. If there is no Poll, return 400.
         If the poll is accepting answers, return 400.
+      parameters:
+      - in: path
+        name: session_id
+        schema:
+          type: integer
+        required: true
       tags:
-      - api
+      - session
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -127,19 +193,13 @@ paths:
           description: No response body
   /api/session/start:
     post:
-      operationId: api_session_start_create
+      operationId: session_start_create
       description: Creates a poll for the session with the provided question and answer.
       tags:
-      - api
+      - session
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/SessionStart'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/SessionStart'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/SessionStart'
         required: true
@@ -152,10 +212,66 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionStart'
+                $ref: '#/components/schemas/Poll'
           description: ''
 components:
   schemas:
+    Answer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        answer:
+          type: string
+          maxLength: 4095
+        is_correct:
+          type: boolean
+        question:
+          type: integer
+      required:
+      - id
+      - question
+    PatchedPollSetAcceptingAnswers:
+      type: object
+      properties:
+        poll:
+          type: integer
+        is_accepting_answers:
+          type: boolean
+    Poll:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_accepting_answers:
+          type: boolean
+        session:
+          type: integer
+      required:
+      - id
+      - session
+    PollNextQuestion:
+      type: object
+      properties:
+        poll:
+          type: integer
+        question:
+          type: integer
+      required:
+      - poll
+      - question
+    PollSubmitResponse:
+      type: object
+      properties:
+        poll:
+          type: integer
+        answer:
+          type: integer
+      required:
+      - answer
+      - poll
     Question:
       type: object
       properties:
@@ -170,6 +286,44 @@ components:
           nullable: true
       required:
       - id
+    QuestionCreate:
+      type: object
+      properties:
+        prompt:
+          type: string
+          maxLength: 4095
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionCreateAnswerInput'
+      required:
+      - answers
+      - prompt
+    QuestionCreateAnswerInput:
+      type: object
+      properties:
+        answer:
+          type: string
+          maxLength: 4095
+        is_correct:
+          type: boolean
+      required:
+      - answer
+      - is_correct
+    Response:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        poll:
+          type: integer
+        answer:
+          type: integer
+      required:
+      - answer
+      - id
+      - poll
     Session:
       type: object
       properties:

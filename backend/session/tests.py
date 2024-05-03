@@ -11,7 +11,9 @@ class TestSessionService(TestCase):
     def setUp(self):
         self.client = Client()
         self.sessionStartURL = reverse("pollpal:session-start")
-        self.sessionEndURL = reverse("pollpal:session-end")
+        self.sessionEndURL = lambda session_id: reverse(
+            "pollpal:session-end", kwargs={"session_id": session_id}
+        )
 
     def test_startSession_create_validPoll(self):
 
@@ -47,11 +49,13 @@ class TestSessionService(TestCase):
         )
         response = Response.objects.create(poll=poll, answer=answer)
 
-        data = {"session": session.id}
+        params = {"session": session.id}
 
         # Act
         response = self.client.delete(
-            self.sessionEndURL, json.dumps(data), content_type="application/json"
+            self.sessionEndURL(session.id),
+            params=params,
+            content_type="application/json",
         )
 
         # Assert
@@ -67,11 +71,13 @@ class TestSessionService(TestCase):
         # Arrange
         session = Session.objects.create(label="Session 1")
 
-        data = {"session": session.id}
+        params = {"session": session.id}
 
         # Act
         response = self.client.delete(
-            self.sessionEndURL, json.dumps(data), content_type="application/json"
+            self.sessionEndURL(session.id),
+            params=params,
+            content_type="application/json",
         )
 
         # Assert
@@ -82,19 +88,90 @@ class TestSessionService(TestCase):
     def test_endSession_deletePollAcceptingAnswers_doNothing(self):
         # Arrange
         session = Session.objects.create(label="Session 1")
-        poll = Poll.objects.create(session=session, is_accepting_answers=True)
+        Poll.objects.create(session=session, is_accepting_answers=True)
 
-        data = {"session": session.id}
+        params = {"session": session.id}
 
         # Act
         response = self.client.delete(
-            self.sessionEndURL, json.dumps(data), content_type="application/json"
+            self.sessionEndURL(session.id),
+            params=params,
+            content_type="application/json",
         )
 
         # Assert
         self.assertEqual(response.status_code, 400)
         self.assertTrue(Session.objects.exists())
         self.assertTrue(Poll.objects.exists())
+
+
+class TestQuestionService(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.questionCreateURL = reverse("pollpal:question-create")
+
+    def test_createQuestion_createQuestionAndAnswers(self):
+        # Arrange
+        data = {
+            "prompt": "Question 1",
+            "answers": [
+                {"answer": "Answer 1", "is_correct": True},
+                {"answer": "Answer 2", "is_correct": False},
+            ],
+        }
+
+        # Act
+        response = self.client.post(
+            self.questionCreateURL, json.dumps(data), content_type="application/json"
+        )
+
+        # Assert
+        self.assertEqual(response.status_code, 201)
+        question: Question = Question.objects.get(pk=response.data["id"])
+        self.assertEqual(question.prompt, data["prompt"])
+
+        answer1 = Answer.objects.get(answer="Answer 1")
+        answer2 = Answer.objects.get(answer="Answer 2")
+
+        self.assertTrue(Answer.objects.filter(answer="Answer 1").exists())
+        self.assertTrue(Answer.objects.filter(answer="Answer 2").exists())
+        self.assertTrue(answer1.is_correct)
+        self.assertFalse(answer2.is_correct)
+
+    def test_createQuestion_noAnswers_doNothing(self):
+        # Arrange
+        data = {
+            "prompt": "Question 1",
+            "answers": [],
+        }
+
+        # Act
+        response = self.client.post(
+            self.questionCreateURL, json.dumps(data), content_type="application/json"
+        )
+
+        # Assert
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(Question.objects.filter(prompt="Question 1").exists())
+
+    def test_createQuestion_noCorrectAnswer_doNothing(self):
+        # Arrange
+        data = {
+            "prompt": "Question 1",
+            "answers": [
+                {"answer": "Answer 1", "is_correct": False},
+                {"answer": "Answer 2", "is_correct": False},
+            ],
+        }
+
+        # Act
+        response = self.client.post(
+            self.questionCreateURL, json.dumps(data), content_type="application/json"
+        )
+
+        # Assert
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(Question.objects.filter(prompt="Question 2").exists())
 
 
 class TestPollService(TestCase):
@@ -169,7 +246,7 @@ class TestPollService(TestCase):
         poll = Poll.objects.create(session=session, is_accepting_answers=True)
         question = Question.objects.create(poll=poll, prompt="Test Question")
 
-        data = {"poll": poll.id}
+        data = {"poll": poll.id, "is_accepting_answers": False}
 
         # Act
         response = self.client.patch(
@@ -179,8 +256,8 @@ class TestPollService(TestCase):
         )
 
         # Assert
-        poll: Poll = Poll.objects.get(pk=response.data["id"])
         self.assertEqual(response.status_code, 202)
+        poll: Poll = Poll.objects.get(pk=response.data["id"])
         self.assertFalse(poll.is_accepting_answers)
 
     def test_setAcceptingAnswers_isNotAcceptingAnswersAndHasQuestion_isAcceptingAnswers(
@@ -191,7 +268,7 @@ class TestPollService(TestCase):
         poll = Poll.objects.create(session=session, is_accepting_answers=False)
         question = Question.objects.create(poll=poll, prompt="Test Question")
 
-        data = {"poll": poll.id}
+        data = {"poll": poll.id, "is_accepting_answers": True}
 
         # Act
         response = self.client.patch(
@@ -201,8 +278,8 @@ class TestPollService(TestCase):
         )
 
         # Assert
-        poll: Poll = Poll.objects.get(pk=response.data["id"])
         self.assertEqual(response.status_code, 202)
+        poll: Poll = Poll.objects.get(pk=response.data["id"])
         self.assertTrue(poll.is_accepting_answers)
 
     def test_setAcceptingAnswers_hasNoQuestion_doNothing(self):
