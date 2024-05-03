@@ -97,6 +97,75 @@ class TestSessionService(TestCase):
         self.assertTrue(Poll.objects.exists())
 
 
+class TestQuestionService(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.questionCreateURL = reverse("pollpal:question-create")
+
+    def test_createQuestion_createQuestionAndAnswers(self):
+        # Arrange
+        data = {
+            "prompt": "Question 1",
+            "answers": [
+                {"answer": "Answer 1", "is_correct": True},
+                {"answer": "Answer 2", "is_correct": False},
+            ],
+        }
+
+        # Act
+        response = self.client.post(
+            self.questionCreateURL, json.dumps(data), content_type="application/json"
+        )
+
+        # Assert
+        self.assertEqual(response.status_code, 201)
+        question: Question = Question.objects.get(pk=response.data["id"])
+        self.assertEqual(question.prompt, data["prompt"])
+
+        answer1 = Answer.objects.get(answer="Answer 1")
+        answer2 = Answer.objects.get(answer="Answer 2")
+
+        self.assertTrue(Answer.objects.filter(answer="Answer 1").exists())
+        self.assertTrue(Answer.objects.filter(answer="Answer 2").exists())
+        self.assertTrue(answer1.is_correct)
+        self.assertFalse(answer2.is_correct)
+
+    def test_createQuestion_noAnswers_doNothing(self):
+        # Arrange
+        data = {
+            "prompt": "Question 1",
+            "answers": [],
+        }
+
+        # Act
+        response = self.client.post(
+            self.questionCreateURL, json.dumps(data), content_type="application/json"
+        )
+
+        # Assert
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(Question.objects.filter(prompt="Question 1").exists())
+
+    def test_createQuestion_noCorrectAnswer_doNothing(self):
+        # Arrange
+        data = {
+            "prompt": "Question 1",
+            "answers": [
+                {"answer": "Answer 1", "is_correct": False},
+                {"answer": "Answer 2", "is_correct": False},
+            ],
+        }
+
+        # Act
+        response = self.client.post(
+            self.questionCreateURL, json.dumps(data), content_type="application/json"
+        )
+
+        # Assert
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(Question.objects.filter(prompt="Question 2").exists())
+
+
 class TestPollService(TestCase):
     def setUp(self):
         self.client = Client()

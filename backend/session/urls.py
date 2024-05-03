@@ -7,7 +7,7 @@ urlpatterns = [
     path("session/", SessionListCreate.as_view(), name="session-list-create"),
     path("session/<int:pk>", SessionDestroy.as_view(), name="session-delete"),
     path("session/start", SessionStart.as_view(), name="session-start"),
-    path("question/", QuestionListCreate.as_view(), name="question-list-create"),
+    # path("question/", QuestionListCreate.as_view(), name="question-list-create"),
     path("session/end", SessionEnd.as_view(), name="session-end"),
     path("poll/next-question", PollNextQuestion.as_view(), name="poll-next-question"),
     path(
@@ -25,4 +25,9 @@ urlpatterns = [
         PollSubmitResponse.as_view(),
         name="poll-submit-response",
     ),
+    path(
+        "question/create",
+        QuestionCreate.as_view(),
+        name="question-create",
+    )
 ]

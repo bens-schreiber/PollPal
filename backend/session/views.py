@@ -18,9 +18,20 @@ class SessionDestroy(generics.DestroyAPIView):
     serializer_class = SessionSerializer
 
 
-class QuestionListCreate(generics.ListCreateAPIView):
+class QuestionCreate(APIView):
     queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
+    serializer_class = QuestionCreateSerializer
+
+    def post(self, request, format=None):
+        """Creates a question with the provided prompt and answers."""
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.are_answers_valid(serializer.validated_data["answers"])
+
+        question = serializer.create(serializer.validated_data)
+
+        return rf.Response(QuestionSerializer(question).data, status=201)
 
 
 class SessionStart(APIView):
@@ -47,13 +58,7 @@ class SessionEnd(APIView):
 
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        session: Session = serializer.save()
-        if not Poll.objects.filter(session=session.id).exists():
-            return HttpResponseBadRequest("Poll does not exist.")
-
-        poll: Poll = session.poll
-        if poll.is_accepting_answers:
-            return HttpResponseBadRequest("Poll is accepting answers.")
+        poll: Poll = serializer.is_poll_valid()
 
         poll.delete()
 
@@ -68,10 +73,9 @@ class PollNextQuestion(APIView):
 
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        poll: Poll = serializer.save()
+        serializer.is_poll_valid()
 
-        if poll.is_accepting_answers:
-            return HttpResponseBadRequest("Poll is accepting answers.")
+        poll: Poll = serializer.create(serializer.validated_data)
 
         new_question: Question = serializer.validated_data.pop("question")
         Question.objects.filter(poll=poll).first().delete()
@@ -90,10 +94,9 @@ class PollSetAcceptingAnswers(APIView):
 
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        poll: Poll = serializer.save()
+        serializer.is_poll_valid()
 
-        if not Question.objects.filter(poll=poll.id).exists():
-            return HttpResponseBadRequest("Poll does not have a question.")
+        poll: Poll = serializer.create(serializer.validated_data)
 
         poll.is_accepting_answers = not poll.is_accepting_answers
         poll.save()
@@ -123,12 +126,10 @@ class PollSubmitResponse(APIView):
 
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        poll: Poll = serializer.save()
+        serializer.is_poll_valid()
 
-        if not poll.is_accepting_answers:
-            return HttpResponseBadRequest("Poll is not accepting answers")
-
+        poll: Poll = serializer.create(serializer.validated_data)
         answer: Answer = serializer.validated_data.pop("answer")
-
         response = Response.objects.create(poll=poll, answer=answer)
+
         return rf.Response(ResponseSerializer(response).data, status=201)
