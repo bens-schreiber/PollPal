@@ -33,6 +33,52 @@ class AnswerList(APIView):
         return rf.Response(serializer.data, status=200)
 
 
+@extend_schema(responses=SessionSerializer)
+class SessionDetail(APIView):
+    queryset = Session.objects.all()
+
+    def get(self, request, session_id, format=None):
+        """Returns the session with the provided session_id."""
+        session = get_object_or_404(Session, pk=session_id)
+        serializer = SessionSerializer(session)
+        return rf.Response(serializer.data, status=200)
+
+
+@extend_schema(responses=PollSerializer)
+class PollFromSession(APIView):
+    queryset = Poll.objects.all()
+
+    def get(self, request, session_id, format=None):
+        """Returns the poll from the session with the provided session_id."""
+        session = get_object_or_404(Session, pk=session_id)
+        poll = Poll.objects.filter(session=session).first()
+        serializer = PollSerializer(poll)
+        return rf.Response(serializer.data, status=200)
+
+
+@extend_schema(responses=QuestionSerializer)
+class QuestionFromPoll(APIView):
+    queryset = Question.objects.all()
+
+    def get(self, request, poll_id, format=None):
+        """Returns the question from the poll with the provided poll_id."""
+        poll = get_object_or_404(Poll, pk=poll_id)
+        question = Question.objects.filter(poll=poll).first()
+        serializer = QuestionSerializer(question)
+        return rf.Response(serializer.data, status=200)
+
+
+@extend_schema(responses=PollSerializer)
+class PollDetail(APIView):
+    queryset = Session.objects.all()
+
+    def get(self, request, poll_id, format=None):
+        """Returns the poll with the provided poll_id."""
+        session = get_object_or_404(Session, pk=poll_id)
+        serializer = PollSerializer(session)
+        return rf.Response(serializer.data, status=200)
+
+
 @extend_schema(responses=QuestionSerializer)
 class QuestionCreate(APIView):
     queryset = Question.objects.all()
@@ -146,7 +192,7 @@ class PollSubmitResponse(APIView):
     serializer_class = PollSubmitResponseSerializer
 
     def put(self, request, format=None):
-
+        print(request.data)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.is_poll_valid()

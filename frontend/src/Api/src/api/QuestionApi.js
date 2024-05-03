@@ -139,4 +139,55 @@ export default class QuestionApi {
         });
     }
 
+
+    /**
+     * Returns the question from the poll with the provided poll_id.
+     * @param {Number} poll_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Question} and HTTP response
+     */
+    questionPollRetrieveWithHttpInfo(poll_id) {
+      
+      let postBody = null;
+      // verify the required parameter 'poll_id' is set
+      if (poll_id === undefined || poll_id === null) {
+        throw new Error("Missing the required parameter 'poll_id' when calling questionPollRetrieve");
+      }
+
+      let pathParams = {
+        'poll_id': poll_id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Question;
+
+      return this.apiClient.callApi(
+        '/api/question/poll/{poll_id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Returns the question from the poll with the provided poll_id.
+     * @param {<&vendorExtensions.x-jsdoc-type>} poll_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Question}
+     */
+    questionPollRetrieve(poll_id) {
+      return this.questionPollRetrieveWithHttpInfo(poll_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 }

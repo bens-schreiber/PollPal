@@ -100,13 +100,17 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *PollPalApi.PollApi* | [**pollAnswerRetrieve**](docs/PollApi.md#pollAnswerRetrieve) | **GET** /api/poll/{poll_id}/answer | 
 *PollPalApi.PollApi* | [**pollNextQuestionCreate**](docs/PollApi.md#pollNextQuestionCreate) | **POST** /api/poll/next-question | 
+*PollPalApi.PollApi* | [**pollRetrieve**](docs/PollApi.md#pollRetrieve) | **GET** /api/poll/{poll_id} | 
+*PollPalApi.PollApi* | [**pollSessionRetrieve**](docs/PollApi.md#pollSessionRetrieve) | **GET** /api/poll/session/{session_id} | 
 *PollPalApi.PollApi* | [**pollSetAcceptingAnswerPartialUpdate**](docs/PollApi.md#pollSetAcceptingAnswerPartialUpdate) | **PATCH** /api/poll/set-accepting-answer | 
 *PollPalApi.PollApi* | [**pollSubmitResponseUpdate**](docs/PollApi.md#pollSubmitResponseUpdate) | **PUT** /api/poll/submit-response | 
 *PollPalApi.QuestionApi* | [**questionAnswerList**](docs/QuestionApi.md#questionAnswerList) | **GET** /api/question/{question_id}/answer | 
 *PollPalApi.QuestionApi* | [**questionCreateCreate**](docs/QuestionApi.md#questionCreateCreate) | **POST** /api/question/create | 
+*PollPalApi.QuestionApi* | [**questionPollRetrieve**](docs/QuestionApi.md#questionPollRetrieve) | **GET** /api/question/poll/{poll_id} | 
 *PollPalApi.SessionApi* | [**sessionCreate**](docs/SessionApi.md#sessionCreate) | **POST** /api/session/ | 
 *PollPalApi.SessionApi* | [**sessionDestroy**](docs/SessionApi.md#sessionDestroy) | **DELETE** /api/session/{id} | 
 *PollPalApi.SessionApi* | [**sessionEndDestroy**](docs/SessionApi.md#sessionEndDestroy) | **DELETE** /api/session/{session_id}/end | 
+*PollPalApi.SessionApi* | [**sessionGetRetrieve**](docs/SessionApi.md#sessionGetRetrieve) | **GET** /api/session/get/{session_id} | 
 *PollPalApi.SessionApi* | [**sessionList**](docs/SessionApi.md#sessionList) | **GET** /api/session/ | 
 *PollPalApi.SessionApi* | [**sessionStartCreate**](docs/SessionApi.md#sessionStartCreate) | **POST** /api/session/start | 
 

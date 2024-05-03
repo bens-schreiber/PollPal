@@ -188,6 +188,57 @@ export default class SessionApi {
 
 
     /**
+     * Returns the session with the provided session_id.
+     * @param {Number} session_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Session} and HTTP response
+     */
+    sessionGetRetrieveWithHttpInfo(session_id) {
+      
+      let postBody = null;
+      // verify the required parameter 'session_id' is set
+      if (session_id === undefined || session_id === null) {
+        throw new Error("Missing the required parameter 'session_id' when calling sessionGetRetrieve");
+      }
+
+      let pathParams = {
+        'session_id': session_id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Session;
+
+      return this.apiClient.callApi(
+        '/api/session/get/{session_id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Returns the session with the provided session_id.
+     * @param {<&vendorExtensions.x-jsdoc-type>} session_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Session}
+     */
+    sessionGetRetrieve(session_id) {
+      return this.sessionGetRetrieveWithHttpInfo(session_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link Array.<module:model/Session>} and HTTP response
      */
     sessionListWithHttpInfo() {

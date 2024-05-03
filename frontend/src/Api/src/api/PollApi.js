@@ -140,6 +140,108 @@ export default class PollApi {
 
 
     /**
+     * Returns the poll with the provided poll_id.
+     * @param {Number} poll_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
+     */
+    pollRetrieveWithHttpInfo(poll_id) {
+      
+      let postBody = null;
+      // verify the required parameter 'poll_id' is set
+      if (poll_id === undefined || poll_id === null) {
+        throw new Error("Missing the required parameter 'poll_id' when calling pollRetrieve");
+      }
+
+      let pathParams = {
+        'poll_id': poll_id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Poll;
+
+      return this.apiClient.callApi(
+        '/api/poll/{poll_id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Returns the poll with the provided poll_id.
+     * @param {<&vendorExtensions.x-jsdoc-type>} poll_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Poll}
+     */
+    pollRetrieve(poll_id) {
+      return this.pollRetrieveWithHttpInfo(poll_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * Returns the poll from the session with the provided session_id.
+     * @param {Number} session_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
+     */
+    pollSessionRetrieveWithHttpInfo(session_id) {
+      
+      let postBody = null;
+      // verify the required parameter 'session_id' is set
+      if (session_id === undefined || session_id === null) {
+        throw new Error("Missing the required parameter 'session_id' when calling pollSessionRetrieve");
+      }
+
+      let pathParams = {
+        'session_id': session_id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Poll;
+
+      return this.apiClient.callApi(
+        '/api/poll/session/{session_id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Returns the poll from the session with the provided session_id.
+     * @param {<&vendorExtensions.x-jsdoc-type>} session_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Poll}
+     */
+    pollSessionRetrieve(session_id) {
+      return this.pollSessionRetrieveWithHttpInfo(session_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
      * @param {module:model/PollSetAcceptingAnswers} body 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
      */

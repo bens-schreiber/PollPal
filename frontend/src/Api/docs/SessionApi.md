@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**sessionCreate**](SessionApi.md#sessionCreate) | **POST** /api/session/ | 
 [**sessionDestroy**](SessionApi.md#sessionDestroy) | **DELETE** /api/session/{id} | 
 [**sessionEndDestroy**](SessionApi.md#sessionEndDestroy) | **DELETE** /api/session/{session_id}/end | 
+[**sessionGetRetrieve**](SessionApi.md#sessionGetRetrieve) | **GET** /api/session/get/{session_id} | 
 [**sessionList**](SessionApi.md#sessionList) | **GET** /api/session/ | 
 [**sessionStartCreate**](SessionApi.md#sessionStartCreate) | **POST** /api/session/start | 
 
@@ -164,6 +165,59 @@ null (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+<a name="sessionGetRetrieve"></a>
+# **sessionGetRetrieve**
+> Session sessionGetRetrieve(session_id)
+
+
+
+Returns the session with the provided session_id.
+
+### Example
+```javascript
+import {PollPalApi} from 'poll_pal_api';
+let defaultClient = PollPalApi.ApiClient.instance;
+// Configure HTTP basic authorization: basicAuth
+let basicAuth = defaultClient.authentications['basicAuth'];
+basicAuth.username = 'YOUR USERNAME';
+basicAuth.password = 'YOUR PASSWORD';
+
+// Configure API key authorization: cookieAuth
+let cookieAuth = defaultClient.authentications['cookieAuth'];
+cookieAuth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//cookieAuth.apiKeyPrefix = 'Token';
+
+let apiInstance = new PollPalApi.SessionApi();
+let session_id = 56; // Number | 
+
+apiInstance.sessionGetRetrieve(session_id).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **session_id** | **Number**|  | 
+
+### Return type
+
+[**Session**](Session.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 <a name="sessionList"></a>
 # **sessionList**

@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**questionAnswerList**](QuestionApi.md#questionAnswerList) | **GET** /api/question/{question_id}/answer | 
 [**questionCreateCreate**](QuestionApi.md#questionCreateCreate) | **POST** /api/question/create | 
+[**questionPollRetrieve**](QuestionApi.md#questionPollRetrieve) | **GET** /api/question/poll/{poll_id} | 
 
 <a name="questionAnswerList"></a>
 # **questionAnswerList**
@@ -111,5 +112,58 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="questionPollRetrieve"></a>
+# **questionPollRetrieve**
+> Question questionPollRetrieve(poll_id)
+
+
+
+Returns the question from the poll with the provided poll_id.
+
+### Example
+```javascript
+import {PollPalApi} from 'poll_pal_api';
+let defaultClient = PollPalApi.ApiClient.instance;
+// Configure HTTP basic authorization: basicAuth
+let basicAuth = defaultClient.authentications['basicAuth'];
+basicAuth.username = 'YOUR USERNAME';
+basicAuth.password = 'YOUR PASSWORD';
+
+// Configure API key authorization: cookieAuth
+let cookieAuth = defaultClient.authentications['cookieAuth'];
+cookieAuth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//cookieAuth.apiKeyPrefix = 'Token';
+
+let apiInstance = new PollPalApi.QuestionApi();
+let poll_id = 56; // Number | 
+
+apiInstance.questionPollRetrieve(poll_id).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **poll_id** | **Number**|  | 
+
+### Return type
+
+[**Question**](Question.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 

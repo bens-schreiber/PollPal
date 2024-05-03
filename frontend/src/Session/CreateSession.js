@@ -367,6 +367,7 @@ const StartPollForm = ({ session, questions }) => {
           )}
         </FormBox>
       )}
+      {pollStarted && <>Session Code: {session.id}</>}
     </FormPaper>
   );
 };
