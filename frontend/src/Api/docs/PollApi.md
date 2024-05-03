@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 <a name="pollAnswerRetrieve"></a>
 # **pollAnswerRetrieve**
-> pollAnswerRetrieve(pollId)
+> Answer pollAnswerRetrieve(poll_id)
 
 
 
@@ -31,26 +31,25 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.PollApi();
-let pollId = 56; // Number | 
+let poll_id = 56; // Number | 
 
-apiInstance.pollAnswerRetrieve(pollId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
+apiInstance.pollAnswerRetrieve(poll_id).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pollId** | **Number**|  | 
+ **poll_id** | **Number**|  | 
 
 ### Return type
 
-null (empty response body)
+[**Answer**](Answer.md)
 
 ### Authorization
 
@@ -59,11 +58,11 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 <a name="pollNextQuestionCreate"></a>
 # **pollNextQuestionCreate**
-> PollNextQuestion pollNextQuestionCreate(body)
+> Poll pollNextQuestionCreate(body)
 
 
 
@@ -83,26 +82,25 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.PollApi();
-let body = new PollPalApi.PollNextQuestionRequest(); // PollNextQuestionRequest | 
+let body = new PollPalApi.PollNextQuestion(); // PollNextQuestion | 
 
-apiInstance.pollNextQuestionCreate(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.pollNextQuestionCreate(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PollNextQuestionRequest**](PollNextQuestionRequest.md)|  | 
+ **body** | [**PollNextQuestion**](PollNextQuestion.md)|  | 
 
 ### Return type
 
-[**PollNextQuestion**](PollNextQuestion.md)
+[**Poll**](Poll.md)
 
 ### Authorization
 
@@ -115,7 +113,7 @@ Name | Type | Description  | Notes
 
 <a name="pollSetAcceptingAnswerPartialUpdate"></a>
 # **pollSetAcceptingAnswerPartialUpdate**
-> PollSetAcceptingAnswers pollSetAcceptingAnswerPartialUpdate(opts)
+> Poll pollSetAcceptingAnswerPartialUpdate(opts)
 
 
 
@@ -136,26 +134,25 @@ cookieAuth.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PollPalApi.PollApi();
 let opts = { 
-  'body': new PollPalApi.PatchedPollSetAcceptingAnswersRequest() // PatchedPollSetAcceptingAnswersRequest | 
+  'body': new PollPalApi.PatchedPollSetAcceptingAnswers() // PatchedPollSetAcceptingAnswers | 
 };
-apiInstance.pollSetAcceptingAnswerPartialUpdate(opts, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.pollSetAcceptingAnswerPartialUpdate(opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PatchedPollSetAcceptingAnswersRequest**](PatchedPollSetAcceptingAnswersRequest.md)|  | [optional] 
+ **body** | [**PatchedPollSetAcceptingAnswers**](PatchedPollSetAcceptingAnswers.md)|  | [optional] 
 
 ### Return type
 
-[**PollSetAcceptingAnswers**](PollSetAcceptingAnswers.md)
+[**Poll**](Poll.md)
 
 ### Authorization
 
@@ -168,7 +165,7 @@ Name | Type | Description  | Notes
 
 <a name="pollSubmitResponseUpdate"></a>
 # **pollSubmitResponseUpdate**
-> PollSubmitResponse pollSubmitResponseUpdate(body)
+> Response pollSubmitResponseUpdate(body)
 
 
 
@@ -188,26 +185,25 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.PollApi();
-let body = new PollPalApi.PollSubmitResponseRequest(); // PollSubmitResponseRequest | 
+let body = new PollPalApi.PollSubmitResponse(); // PollSubmitResponse | 
 
-apiInstance.pollSubmitResponseUpdate(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.pollSubmitResponseUpdate(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PollSubmitResponseRequest**](PollSubmitResponseRequest.md)|  | 
+ **body** | [**PollSubmitResponse**](PollSubmitResponse.md)|  | 
 
 ### Return type
 
-[**PollSubmitResponse**](PollSubmitResponse.md)
+[**Response**](Response.md)
 
 ### Authorization
 

@@ -82,16 +82,14 @@ cookieAuth.apiKey = "YOUR API KEY"
 //cookieAuth.apiKeyPrefix['sessionid'] = "Token"
 
 var api = new PollPalApi.PollApi()
-var pollId = 56; // {Number} 
+var poll_id = 56; // {Number} 
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-api.pollAnswerRetrieve(pollId, callback);
+api.pollAnswerRetrieve(poll_id).then(function(data) {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
+
 ```
 
 ## Documentation for API Endpoints
@@ -113,20 +111,17 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
- - [PollPalApi.PatchedPollSetAcceptingAnswersRequest](docs/PatchedPollSetAcceptingAnswersRequest.md)
+ - [PollPalApi.Answer](docs/Answer.md)
+ - [PollPalApi.PatchedPollSetAcceptingAnswers](docs/PatchedPollSetAcceptingAnswers.md)
+ - [PollPalApi.Poll](docs/Poll.md)
  - [PollPalApi.PollNextQuestion](docs/PollNextQuestion.md)
- - [PollPalApi.PollNextQuestionRequest](docs/PollNextQuestionRequest.md)
- - [PollPalApi.PollSetAcceptingAnswers](docs/PollSetAcceptingAnswers.md)
  - [PollPalApi.PollSubmitResponse](docs/PollSubmitResponse.md)
- - [PollPalApi.PollSubmitResponseRequest](docs/PollSubmitResponseRequest.md)
+ - [PollPalApi.Question](docs/Question.md)
  - [PollPalApi.QuestionCreate](docs/QuestionCreate.md)
  - [PollPalApi.QuestionCreateAnswerInput](docs/QuestionCreateAnswerInput.md)
- - [PollPalApi.QuestionCreateAnswerInputRequest](docs/QuestionCreateAnswerInputRequest.md)
- - [PollPalApi.QuestionCreateRequest](docs/QuestionCreateRequest.md)
+ - [PollPalApi.Response](docs/Response.md)
  - [PollPalApi.Session](docs/Session.md)
- - [PollPalApi.SessionRequest](docs/SessionRequest.md)
  - [PollPalApi.SessionStart](docs/SessionStart.md)
- - [PollPalApi.SessionStartRequest](docs/SessionStartRequest.md)
 
 ## Documentation for Authorization
 

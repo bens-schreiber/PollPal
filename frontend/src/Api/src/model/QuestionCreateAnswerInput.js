@@ -25,11 +25,11 @@ export default class QuestionCreateAnswerInput {
    * @alias module:model/QuestionCreateAnswerInput
    * @class
    * @param answer {String} 
-   * @param isCorrect {Boolean} 
+   * @param is_correct {Boolean} 
    */
-  constructor(answer, isCorrect) {
+  constructor(answer, is_correct) {
     this.answer = answer;
-    this.isCorrect = isCorrect;
+    this.is_correct = is_correct;
   }
 
   /**
@@ -45,7 +45,7 @@ export default class QuestionCreateAnswerInput {
       if (data.hasOwnProperty('answer'))
         obj.answer = ApiClient.convertToType(data['answer'], 'String');
       if (data.hasOwnProperty('is_correct'))
-        obj.isCorrect = ApiClient.convertToType(data['is_correct'], 'Boolean');
+        obj.is_correct = ApiClient.convertToType(data['is_correct'], 'Boolean');
     }
     return obj;
   }
@@ -57,7 +57,7 @@ export default class QuestionCreateAnswerInput {
 QuestionCreateAnswerInput.prototype.answer = undefined;
 
 /**
- * @member {Boolean} isCorrect
+ * @member {Boolean} is_correct
  */
-QuestionCreateAnswerInput.prototype.isCorrect = undefined;
+QuestionCreateAnswerInput.prototype.is_correct = undefined;
 

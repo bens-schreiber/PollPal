@@ -32,22 +32,21 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.SessionApi();
-let body = new PollPalApi.SessionRequest(); // SessionRequest | 
+let body = new PollPalApi.Session(); // Session | 
 
-apiInstance.sessionCreate(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.sessionCreate(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SessionRequest**](SessionRequest.md)|  | 
+ **body** | [**Session**](Session.md)|  | 
 
 ### Return type
 
@@ -86,13 +85,12 @@ cookieAuth.apiKey = 'YOUR API KEY';
 let apiInstance = new PollPalApi.SessionApi();
 let id = 56; // Number | 
 
-apiInstance.sessionDestroy(id, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
+apiInstance.sessionDestroy(id).then(() => {
+  console.log('API called successfully.');
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -116,7 +114,7 @@ null (empty response body)
 
 <a name="sessionEndDestroy"></a>
 # **sessionEndDestroy**
-> sessionEndDestroy(sessionId)
+> sessionEndDestroy(session_id)
 
 
 
@@ -138,22 +136,21 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.SessionApi();
-let sessionId = 56; // Number | 
+let session_id = 56; // Number | 
 
-apiInstance.sessionEndDestroy(sessionId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
+apiInstance.sessionEndDestroy(session_id).then(() => {
+  console.log('API called successfully.');
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **sessionId** | **Number**|  | 
+ **session_id** | **Number**|  | 
 
 ### Return type
 
@@ -190,13 +187,12 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.SessionApi();
-apiInstance.sessionList((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.sessionList().then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -217,7 +213,7 @@ This endpoint does not need any parameter.
 
 <a name="sessionStartCreate"></a>
 # **sessionStartCreate**
-> SessionStart sessionStartCreate(body)
+> Poll sessionStartCreate(body)
 
 
 
@@ -239,26 +235,25 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.SessionApi();
-let body = new PollPalApi.SessionStartRequest(); // SessionStartRequest | 
+let body = new PollPalApi.SessionStart(); // SessionStart | 
 
-apiInstance.sessionStartCreate(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.sessionStartCreate(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SessionStartRequest**](SessionStartRequest.md)|  | 
+ **body** | [**SessionStart**](SessionStart.md)|  | 
 
 ### Return type
 
-[**SessionStart**](SessionStart.md)
+[**Poll**](Poll.md)
 
 ### Authorization
 

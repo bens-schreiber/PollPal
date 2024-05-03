@@ -15,37 +15,37 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The Session model module.
- * @module model/Session
+ * The Question model module.
+ * @module model/Question
  * @version 1.0.0
  */
-export default class Session {
+export default class Question {
   /**
-   * Constructs a new <code>Session</code>.
-   * @alias module:model/Session
+   * Constructs a new <code>Question</code>.
+   * @alias module:model/Question
    * @class
    * @param id {Number} 
-   * @param label {String} 
    */
-  constructor(id, label) {
+  constructor(id) {
     this.id = id;
-    this.label = label;
   }
 
   /**
-   * Constructs a <code>Session</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>Question</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/Session} obj Optional instance to populate.
-   * @return {module:model/Session} The populated <code>Session</code> instance.
+   * @param {module:model/Question} obj Optional instance to populate.
+   * @return {module:model/Question} The populated <code>Question</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new Session();
+      obj = obj || new Question();
       if (data.hasOwnProperty('id'))
         obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('label'))
-        obj.label = ApiClient.convertToType(data['label'], 'String');
+      if (data.hasOwnProperty('prompt'))
+        obj.prompt = ApiClient.convertToType(data['prompt'], 'String');
+      if (data.hasOwnProperty('poll'))
+        obj.poll = ApiClient.convertToType(data['poll'], 'Number');
     }
     return obj;
   }
@@ -54,10 +54,15 @@ export default class Session {
 /**
  * @member {Number} id
  */
-Session.prototype.id = undefined;
+Question.prototype.id = undefined;
 
 /**
- * @member {String} label
+ * @member {String} prompt
  */
-Session.prototype.label = undefined;
+Question.prototype.prompt = undefined;
+
+/**
+ * @member {Number} poll
+ */
+Question.prototype.poll = undefined;
 

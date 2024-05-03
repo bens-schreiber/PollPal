@@ -41,7 +41,7 @@ export default class PatchedPollSetAcceptingAnswers {
       if (data.hasOwnProperty('poll'))
         obj.poll = ApiClient.convertToType(data['poll'], 'Number');
       if (data.hasOwnProperty('is_accepting_answers'))
-        obj.isAcceptingAnswers = ApiClient.convertToType(data['is_accepting_answers'], 'Boolean');
+        obj.is_accepting_answers = ApiClient.convertToType(data['is_accepting_answers'], 'Boolean');
     }
     return obj;
   }
@@ -53,7 +53,7 @@ export default class PatchedPollSetAcceptingAnswers {
 PatchedPollSetAcceptingAnswers.prototype.poll = undefined;
 
 /**
- * @member {Boolean} isAcceptingAnswers
+ * @member {Boolean} is_accepting_answers
  */
-PatchedPollSetAcceptingAnswers.prototype.isAcceptingAnswers = undefined;
+PatchedPollSetAcceptingAnswers.prototype.is_accepting_answers = undefined;
 

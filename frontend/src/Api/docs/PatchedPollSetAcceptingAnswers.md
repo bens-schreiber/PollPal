@@ -4,4 +4,4 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **poll** | **Number** |  | [optional] 
-**isAcceptingAnswers** | **Boolean** |  | [optional] 
+**is_accepting_answers** | **Boolean** |  | [optional] 

@@ -25,11 +25,11 @@ export default class PollSetAcceptingAnswers {
    * @alias module:model/PollSetAcceptingAnswers
    * @class
    * @param poll {Number} 
-   * @param isAcceptingAnswers {Boolean} 
+   * @param is_accepting_answers {Boolean} 
    */
-  constructor(poll, isAcceptingAnswers) {
+  constructor(poll, is_accepting_answers) {
     this.poll = poll;
-    this.isAcceptingAnswers = isAcceptingAnswers;
+    this.is_accepting_answers = is_accepting_answers;
   }
 
   /**
@@ -45,7 +45,7 @@ export default class PollSetAcceptingAnswers {
       if (data.hasOwnProperty('poll'))
         obj.poll = ApiClient.convertToType(data['poll'], 'Number');
       if (data.hasOwnProperty('is_accepting_answers'))
-        obj.isAcceptingAnswers = ApiClient.convertToType(data['is_accepting_answers'], 'Boolean');
+        obj.is_accepting_answers = ApiClient.convertToType(data['is_accepting_answers'], 'Boolean');
     }
     return obj;
   }
@@ -57,7 +57,7 @@ export default class PollSetAcceptingAnswers {
 PollSetAcceptingAnswers.prototype.poll = undefined;
 
 /**
- * @member {Boolean} isAcceptingAnswers
+ * @member {Boolean} is_accepting_answers
  */
-PollSetAcceptingAnswers.prototype.isAcceptingAnswers = undefined;
+PollSetAcceptingAnswers.prototype.is_accepting_answers = undefined;
 

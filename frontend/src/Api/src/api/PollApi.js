@@ -13,12 +13,12 @@
  *
  */
 import ApiClient from "../ApiClient";
-import PatchedPollSetAcceptingAnswersRequest from '../model/PatchedPollSetAcceptingAnswersRequest';
+import Answer from '../model/Answer';
+import PatchedPollSetAcceptingAnswers from '../model/PatchedPollSetAcceptingAnswers';
+import Poll from '../model/Poll';
 import PollNextQuestion from '../model/PollNextQuestion';
-import PollNextQuestionRequest from '../model/PollNextQuestionRequest';
-import PollSetAcceptingAnswers from '../model/PollSetAcceptingAnswers';
 import PollSubmitResponse from '../model/PollSubmitResponse';
-import PollSubmitResponseRequest from '../model/PollSubmitResponseRequest';
+import Response from '../model/Response';
 
 /**
 * Poll service.
@@ -39,28 +39,22 @@ export default class PollApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
-    /**
-     * Callback function to receive the result of the pollAnswerRetrieve operation.
-     * @callback moduleapi/PollApi~pollAnswerRetrieveCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+
 
     /**
-     * @param {Number} pollId 
-     * @param {module:api/PollApi~pollAnswerRetrieveCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {Number} poll_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Answer} and HTTP response
      */
-    pollAnswerRetrieve(pollId, callback) {
+    pollAnswerRetrieveWithHttpInfo(poll_id) {
       
       let postBody = null;
-      // verify the required parameter 'pollId' is set
-      if (pollId === undefined || pollId === null) {
-        throw new Error("Missing the required parameter 'pollId' when calling pollAnswerRetrieve");
+      // verify the required parameter 'poll_id' is set
+      if (poll_id === undefined || poll_id === null) {
+        throw new Error("Missing the required parameter 'poll_id' when calling pollAnswerRetrieve");
       }
 
       let pathParams = {
-        'poll_id': pollId
+        'poll_id': poll_id
       };
       let queryParams = {
         
@@ -74,29 +68,33 @@ export default class PollApi {
 
       let authNames = ['basicAuth', 'cookieAuth'];
       let contentTypes = [];
-      let accepts = [];
-      let returnType = null;
+      let accepts = ['application/json'];
+      let returnType = Answer;
 
       return this.apiClient.callApi(
         '/api/poll/{poll_id}/answer', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
-    /**
-     * Callback function to receive the result of the pollNextQuestionCreate operation.
-     * @callback moduleapi/PollApi~pollNextQuestionCreateCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PollNextQuestion{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
 
     /**
-     * @param {module:model/PollNextQuestionRequest} body 
-     * @param {module:api/PollApi~pollNextQuestionCreateCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @param {<&vendorExtensions.x-jsdoc-type>} poll_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Answer}
      */
-    pollNextQuestionCreate(body, callback) {
+    pollAnswerRetrieve(poll_id) {
+      return this.pollAnswerRetrieveWithHttpInfo(poll_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * @param {module:model/PollNextQuestion} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
+     */
+    pollNextQuestionCreateWithHttpInfo(body) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -120,29 +118,33 @@ export default class PollApi {
       let authNames = ['basicAuth', 'cookieAuth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = PollNextQuestion;
+      let returnType = Poll;
 
       return this.apiClient.callApi(
         '/api/poll/next-question', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the pollSetAcceptingAnswerPartialUpdate operation.
-     * @callback moduleapi/PollApi~pollSetAcceptingAnswerPartialUpdateCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PollSetAcceptingAnswers{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Poll}
      */
+    pollNextQuestionCreate(body) {
+      return this.pollNextQuestionCreateWithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {module:model/PatchedPollSetAcceptingAnswersRequest} opts.body 
-     * @param {module:api/PollApi~pollSetAcceptingAnswerPartialUpdateCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @param {module:model/PatchedPollSetAcceptingAnswers} opts.body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
      */
-    pollSetAcceptingAnswerPartialUpdate(opts, callback) {
+    pollSetAcceptingAnswerPartialUpdateWithHttpInfo(opts) {
       opts = opts || {};
       let postBody = opts['body'];
 
@@ -162,28 +164,33 @@ export default class PollApi {
       let authNames = ['basicAuth', 'cookieAuth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = PollSetAcceptingAnswers;
+      let returnType = Poll;
 
       return this.apiClient.callApi(
         '/api/poll/set-accepting-answer', 'PATCH',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
-    /**
-     * Callback function to receive the result of the pollSubmitResponseUpdate operation.
-     * @callback moduleapi/PollApi~pollSubmitResponseUpdateCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PollSubmitResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
 
     /**
-     * @param {module:model/PollSubmitResponseRequest} body 
-     * @param {module:api/PollApi~pollSubmitResponseUpdateCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @param {Object} opts Optional parameters
+     * @param {module:model/PatchedPollSetAcceptingAnswers} opts.body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Poll}
      */
-    pollSubmitResponseUpdate(body, callback) {
+    pollSetAcceptingAnswerPartialUpdate(opts) {
+      return this.pollSetAcceptingAnswerPartialUpdateWithHttpInfo(opts)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * @param {module:model/PollSubmitResponse} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Response} and HTTP response
+     */
+    pollSubmitResponseUpdateWithHttpInfo(body) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -207,13 +214,24 @@ export default class PollApi {
       let authNames = ['basicAuth', 'cookieAuth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = PollSubmitResponse;
+      let returnType = Response;
 
       return this.apiClient.callApi(
         '/api/poll/submit-response', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
+    }
+
+    /**
+     * @param {<&vendorExtensions.x-jsdoc-type>} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Response}
+     */
+    pollSubmitResponseUpdate(body) {
+      return this.pollSubmitResponseUpdateWithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
     }
 
 }

@@ -6,20 +6,10 @@ import { Link } from "react-router-dom";
 
 function JoinSessionInput() {
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <TextField
-        id="session-id"
-        label="Session ID"
-        variant="outlined"
-        sx={{ width: 300, height: 50 }}
-      />
+    <Box display="flex" justifyContent="center" gap={3}>
+      <TextField id="session-id" label="Session ID" variant="outlined" />
 
-      <Button variant="contained" sx={{ ml: 2, mt: 1, height: 50 }}>
+      <Button variant="contained">
         <Typography variant="button" fontWeight="bold">
           JOIN
         </Typography>

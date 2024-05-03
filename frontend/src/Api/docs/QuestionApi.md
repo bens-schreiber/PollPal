@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 <a name="questionCreateCreate"></a>
 # **questionCreateCreate**
-> QuestionCreate questionCreateCreate(body)
+> Question questionCreateCreate(body)
 
 
 
@@ -30,26 +30,25 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.QuestionApi();
-let body = new PollPalApi.QuestionCreateRequest(); // QuestionCreateRequest | 
+let body = new PollPalApi.QuestionCreate(); // QuestionCreate | 
 
-apiInstance.questionCreateCreate(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.questionCreateCreate(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**QuestionCreateRequest**](QuestionCreateRequest.md)|  | 
+ **body** | [**QuestionCreate**](QuestionCreate.md)|  | 
 
 ### Return type
 
-[**QuestionCreate**](QuestionCreate.md)
+[**Question**](Question.md)
 
 ### Authorization
 

@@ -1,7 +1,8 @@
-# PollPalApi.QuestionCreateAnswerInput
+# PollPalApi.Response
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**answer** | **String** |  | 
-**is_correct** | **Boolean** |  | 
+**id** | **Number** |  | 
+**poll** | **Number** |  | 
+**answer** | **Number** |  | 

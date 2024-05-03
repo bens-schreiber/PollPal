@@ -13,8 +13,8 @@
  *
  */
 import ApiClient from "../ApiClient";
+import Question from '../model/Question';
 import QuestionCreate from '../model/QuestionCreate';
-import QuestionCreateRequest from '../model/QuestionCreateRequest';
 
 /**
 * Question service.
@@ -35,21 +35,14 @@ export default class QuestionApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
-    /**
-     * Callback function to receive the result of the questionCreateCreate operation.
-     * @callback moduleapi/QuestionApi~questionCreateCreateCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/QuestionCreate{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+
 
     /**
      * Creates a question with the provided prompt and answers.
-     * @param {module:model/QuestionCreateRequest} body 
-     * @param {module:api/QuestionApi~questionCreateCreateCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @param {module:model/QuestionCreate} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Question} and HTTP response
      */
-    questionCreateCreate(body, callback) {
+    questionCreateCreateWithHttpInfo(body) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -73,13 +66,25 @@ export default class QuestionApi {
       let authNames = ['basicAuth', 'cookieAuth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = QuestionCreate;
+      let returnType = Question;
 
       return this.apiClient.callApi(
         '/api/question/create', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
+    }
+
+    /**
+     * Creates a question with the provided prompt and answers.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Question}
+     */
+    questionCreateCreate(body) {
+      return this.questionCreateCreateWithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
     }
 
 }

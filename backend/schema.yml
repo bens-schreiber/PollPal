@@ -21,7 +21,11 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+          description: ''
   /api/poll/next-question:
     post:
       operationId: poll_next_question_create
@@ -31,7 +35,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PollNextQuestionRequest'
+              $ref: '#/components/schemas/PollNextQuestion'
         required: true
       security:
       - cookieAuth: []
@@ -42,7 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PollNextQuestion'
+                $ref: '#/components/schemas/Poll'
           description: ''
   /api/poll/set-accepting-answer:
     patch:
@@ -53,7 +57,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswersRequest'
+              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswers'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -63,7 +67,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PollSetAcceptingAnswers'
+                $ref: '#/components/schemas/Poll'
           description: ''
   /api/poll/submit-response:
     put:
@@ -74,7 +78,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PollSubmitResponseRequest'
+              $ref: '#/components/schemas/PollSubmitResponse'
         required: true
       security:
       - cookieAuth: []
@@ -85,7 +89,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PollSubmitResponse'
+                $ref: '#/components/schemas/Response'
           description: ''
   /api/question/create:
     post:
@@ -97,7 +101,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuestionCreateRequest'
+              $ref: '#/components/schemas/QuestionCreate'
         required: true
       security:
       - cookieAuth: []
@@ -108,7 +112,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuestionCreate'
+                $ref: '#/components/schemas/Question'
           description: ''
   /api/session/:
     get:
@@ -136,7 +140,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionRequest'
+              $ref: '#/components/schemas/Session'
         required: true
       security:
       - cookieAuth: []
@@ -197,7 +201,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionStartRequest'
+              $ref: '#/components/schemas/SessionStart'
         required: true
       security:
       - cookieAuth: []
@@ -208,17 +212,46 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionStart'
+                $ref: '#/components/schemas/Poll'
           description: ''
 components:
   schemas:
-    PatchedPollSetAcceptingAnswersRequest:
+    Answer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        answer:
+          type: string
+          maxLength: 4095
+        is_correct:
+          type: boolean
+        question:
+          type: integer
+      required:
+      - id
+      - question
+    PatchedPollSetAcceptingAnswers:
       type: object
       properties:
         poll:
           type: integer
         is_accepting_answers:
           type: boolean
+    Poll:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_accepting_answers:
+          type: boolean
+        session:
+          type: integer
+      required:
+      - id
+      - session
     PollNextQuestion:
       type: object
       properties:
@@ -229,26 +262,6 @@ components:
       required:
       - poll
       - question
-    PollNextQuestionRequest:
-      type: object
-      properties:
-        poll:
-          type: integer
-        question:
-          type: integer
-      required:
-      - poll
-      - question
-    PollSetAcceptingAnswers:
-      type: object
-      properties:
-        poll:
-          type: integer
-        is_accepting_answers:
-          type: boolean
-      required:
-      - is_accepting_answers
-      - poll
     PollSubmitResponse:
       type: object
       properties:
@@ -259,16 +272,20 @@ components:
       required:
       - answer
       - poll
-    PollSubmitResponseRequest:
+    Question:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
+        prompt:
+          type: string
+          maxLength: 4095
         poll:
           type: integer
-        answer:
-          type: integer
+          nullable: true
       required:
-      - answer
-      - poll
+      - id
     QuestionCreate:
       type: object
       properties:
@@ -293,32 +310,20 @@ components:
       required:
       - answer
       - is_correct
-    QuestionCreateAnswerInputRequest:
+    Response:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
+        poll:
+          type: integer
         answer:
-          type: string
-          minLength: 1
-          maxLength: 4095
-        is_correct:
-          type: boolean
+          type: integer
       required:
       - answer
-      - is_correct
-    QuestionCreateRequest:
-      type: object
-      properties:
-        prompt:
-          type: string
-          minLength: 1
-          maxLength: 4095
-        answers:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuestionCreateAnswerInputRequest'
-      required:
-      - answers
-      - prompt
+      - id
+      - poll
     Session:
       type: object
       properties:
@@ -329,27 +334,9 @@ components:
           type: string
           maxLength: 255
       required:
-      - label
-    SessionRequest:
-      type: object
-      properties:
-        label:
-          type: string
-          minLength: 1
-          maxLength: 255
-      required:
+      - id
       - label
     SessionStart:
-      type: object
-      properties:
-        session:
-          type: integer
-        question:
-          type: integer
-      required:
-      - question
-      - session
-    SessionStartRequest:
       type: object
       properties:
         session:

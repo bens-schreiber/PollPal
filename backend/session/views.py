@@ -7,6 +7,7 @@ from .serializers import *
 from django.views import View
 from rest_framework.views import APIView
 from django.http import HttpResponseBadRequest
+from drf_spectacular.utils import extend_schema
 
 
 class SessionListCreate(generics.ListCreateAPIView):
@@ -19,6 +20,7 @@ class SessionDestroy(generics.DestroyAPIView):
     serializer_class = SessionSerializer
 
 
+@extend_schema(responses=QuestionSerializer)
 class QuestionCreate(APIView):
     queryset = Question.objects.all()
     serializer_class = QuestionCreateSerializer
@@ -35,12 +37,14 @@ class QuestionCreate(APIView):
         return rf.Response(QuestionSerializer(question).data, status=201)
 
 
+@extend_schema(responses=PollSerializer)
 class SessionStart(APIView):
     queryset = Session.objects.all()
     serializer_class = SessionStartSerializer
 
     def post(self, request, format=None):
         """Creates a poll for the session with the provided question and answer."""
+        print(request.data)
 
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -70,6 +74,7 @@ class SessionEnd(GenericAPIView):
         return rf.Response(status=202)
 
 
+@extend_schema(responses=PollSerializer)
 class PollNextQuestion(APIView):
     queryset = Poll.objects.all()
     serializer_class = PollNextQuestionSerializer
@@ -91,6 +96,7 @@ class PollNextQuestion(APIView):
         return rf.Response(PollSerializer(poll).data, status=200)
 
 
+@extend_schema(responses=PollSerializer)
 class PollSetAcceptingAnswers(APIView):
     queryset = Poll.objects.all()
     serializer_class = PollSetAcceptingAnswersSerializer
@@ -108,6 +114,7 @@ class PollSetAcceptingAnswers(APIView):
         return rf.Response(PollSerializer(poll).data, status=202)
 
 
+@extend_schema(responses=AnswerSerializer)
 class PollGetAnswer(GenericAPIView):
     def get(self, request, poll_id=None, format=None):
         poll: Poll = get_object_or_404(Poll, pk=poll_id)
@@ -120,6 +127,7 @@ class PollGetAnswer(GenericAPIView):
         return rf.Response(AnswerSerializer(answer).data, status=200)
 
 
+@extend_schema(responses=ResponseSerializer)
 class PollSubmitResponse(APIView):
     queryset = Poll.objects.all()
     serializer_class = PollSubmitResponseSerializer

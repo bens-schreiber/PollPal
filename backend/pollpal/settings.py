@@ -122,11 +122,8 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     # Split components into request and response parts where appropriate
-    "COMPONENT_SPLIT_REQUEST": True,
-    # Aid client generator targets that have trouble with read-only properties.
-    "COMPONENT_NO_READ_ONLY_REQUIRED": True,
-    # Create separate components for PATCH endpoints (without required list)
-    "COMPONENT_SPLIT_PATCH": True,
+    "COMPONENT_SPLIT_REQUEST": False,
+    "CAMELIZE_NAMES": False,
 }
 
 # Internationalization
