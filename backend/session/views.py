@@ -113,3 +113,22 @@ class PollGetAnswer(APIView):
         answer = Answer.objects.filter(question=poll.question, is_correct=True).first()
 
         return rf.Response(AnswerSerializer(answer).data, status=200)
+
+
+class PollSubmitResponse(APIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollSubmitResponseSerializer
+
+    def put(self, request, format=None):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        poll: Poll = serializer.save()
+
+        if not poll.is_accepting_answers:
+            return HttpResponseBadRequest("Poll is not accepting answers")
+
+        answer: Answer = serializer.validated_data.pop("answer")
+
+        response = Response.objects.create(poll=poll, answer=answer)
+        return rf.Response(ResponseSerializer(response).data, status=201)

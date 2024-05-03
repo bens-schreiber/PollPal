@@ -41,11 +41,11 @@ class TestSessionService(TestCase):
         # Arrange
         session = Session.objects.create(label="Session 1")
         poll = Poll.objects.create(session=session, is_accepting_answers=False)
-        response = Response.objects.create(poll=poll, is_correct=True)
         question = Question.objects.create(prompt="Question 1", poll=poll)
         answer = Answer.objects.create(
-            answer="Answer 1", question=question, is_correct=True, response=response
+            answer="Answer 1", question=question, is_correct=True
         )
+        response = Response.objects.create(poll=poll, answer=answer)
 
         data = {"session": session.id}
 
@@ -105,6 +105,7 @@ class TestPollService(TestCase):
         self.getAnswerURL = lambda poll_id: reverse(
             "pollpal:poll-get-correct-answer", kwargs={"poll_id": poll_id}
         )
+        self.submitResponseURL = reverse("pollpal:poll-submit-response")
 
     def test_nextQuestion_setNewQuestion_setsNewQuestion(self):
 
@@ -113,13 +114,12 @@ class TestPollService(TestCase):
         poll = Poll.objects.create(session=session, is_accepting_answers=False)
         old_question = Question.objects.create(prompt="Old Question", poll=poll)
         new_question = Question.objects.create(prompt="New Question")
-        old_response = Response.objects.create(poll=poll, is_correct=True)
         old_question_answer = Answer.objects.create(
             answer="Old Answer",
             question=old_question,
             is_correct=True,
-            response=old_response,
         )
+        old_response = Response.objects.create(poll=poll, answer=old_question_answer)
         new_question_answer = Answer.objects.create(
             answer="New Answer",
             question=new_question,
@@ -244,7 +244,7 @@ class TestPollService(TestCase):
     def test_getAnswer_isNotAcceptingAnswers_getCorrectAnswer(self):
         # Arrange
         session = Session.objects.create(label="Session 1")
-        poll = Poll.objects.create(session=session, is_accepting_answers=True)
+        poll = Poll.objects.create(session=session, is_accepting_answers=False)
         question = Question.objects.create(poll=poll, prompt="Test Question")
         answer = Answer.objects.create(
             answer="Test Correct Answer", question=question, is_correct=True
@@ -261,3 +261,46 @@ class TestPollService(TestCase):
         self.assertEqual(response.status_code, 200)
         got_answer: Answer = Answer.objects.get(pk=response.data["id"])
         self.assertEqual(answer, got_answer)
+
+    def test_submitResponse_isAcceptingAnswers_responseAdded(self):
+        # Arrange
+        session = Session.objects.create(label="Session 1")
+        poll = Poll.objects.create(session=session, is_accepting_answers=True)
+        question = Question.objects.create(poll=poll, prompt="Test Question")
+        answer = Answer.objects.create(
+            answer="Test Correct Answer",
+            question=question,
+            is_correct=True,
+        )
+
+        data = {"poll": poll.id, "answer": answer.id}
+
+        response = self.client.put(
+            self.submitResponseURL,
+            json.dumps(data),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(Response.objects.filter(pk=response.data["id"]).exists())
+
+    def test_submitResponse_isNotAcceptingAnswers_doNothing(self):
+        # Arrange
+        session = Session.objects.create(label="Session 1")
+        poll = Poll.objects.create(session=session, is_accepting_answers=False)
+        question = Question.objects.create(poll=poll, prompt="Test Question")
+        answer = Answer.objects.create(
+            answer="Test Correct Answer",
+            question=question,
+            is_correct=True,
+        )
+
+        data = {"poll": poll.id, "answer": answer.id}
+
+        response = self.client.put(
+            self.submitResponseURL,
+            json.dumps(data),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 400)

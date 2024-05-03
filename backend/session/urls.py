@@ -20,4 +20,9 @@ urlpatterns = [
         PollGetAnswer.as_view(),
         name="poll-get-correct-answer",
     ),
+    path(
+        "poll/submit-response",
+        PollSubmitResponse.as_view(),
+        name="poll-submit-response",
+    ),
 ]
