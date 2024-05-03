@@ -57,3 +57,61 @@ class SessionEnd(APIView):
         poll.delete()
 
         return rf.Response(status=202)
+
+
+class PollNextQuestion(APIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollNextQuestionSerializer
+
+    def post(self, request, format=None):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        poll: Poll = serializer.save()
+
+        if poll.is_accepting_answers:
+            return HttpResponseBadRequest("Poll is accepting answers.")
+
+        new_question: Question = serializer.validated_data.pop("question")
+        Question.objects.filter(poll=poll).first().delete()
+
+        new_question.poll = poll
+        new_question.save()
+
+        return rf.Response(PollSerializer(poll).data, status=200)
+
+
+class PollSetAcceptingAnswers(APIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollSetAcceptingAnswersSerializer
+
+    def patch(self, request, format=None):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        poll: Poll = serializer.save()
+
+        if not Question.objects.filter(poll=poll.id).exists():
+            return HttpResponseBadRequest("Poll does not have a question.")
+
+        poll.is_accepting_answers = not poll.is_accepting_answers
+        poll.save()
+
+        return rf.Response(PollSerializer(poll).data, status=202)
+
+
+class PollGetAnswer(APIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollGetAnswerSerializer
+
+    def get(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        poll: Poll = serializer.save()
+
+        if poll.is_accepting_answers:
+            return HttpResponseBadRequest("Poll is still accepting answers")
+
+        answer = Answer.objects.filter(question=poll.question, is_correct=True).first()
+
+        return rf.Response(AnswerSerializer(answer).data, status=200)

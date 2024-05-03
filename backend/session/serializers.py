@@ -57,3 +57,31 @@ class SessionEndSerializer(serializers.Serializer):
 
         session: Session = validated_data.pop("session")
         return session
+
+
+class PollNextQuestionSerializer(serializers.Serializer):
+    poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
+    question = serializers.PrimaryKeyRelatedField(queryset=Question.objects.all())
+
+    def create(self, validated_data):
+
+        poll: Poll = validated_data.pop("poll")
+        return poll
+
+
+class PollSetAcceptingAnswersSerializer(serializers.Serializer):
+    poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
+
+    def create(self, validated_data):
+
+        poll: Poll = validated_data.pop("poll")
+        return poll
+
+
+class PollGetAnswerSerializer(serializers.Serializer):
+    poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
+
+    def create(self, validated_data):
+
+        poll: Poll = validated_data.pop("poll")
+        return poll
