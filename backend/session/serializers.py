@@ -90,21 +90,6 @@ class SessionStartSerializer(serializers.Serializer):
         return poll
 
 
-class SessionEndSerializer(serializers.Serializer):
-    session = serializers.PrimaryKeyRelatedField(queryset=Session.objects.all())
-
-    def is_poll_valid(self):
-        session: Session = self.validated_data["session"]
-        if not Poll.objects.filter(session=session).exists():
-            raise serializers.ValidationError("Poll does not exist.")
-        if session.poll.is_accepting_answers:
-            raise serializers.ValidationError("Poll is accepting answers.")
-        return session.poll
-
-    def create(self, validated_data):
-        pass
-
-
 class PollNextQuestionSerializer(serializers.Serializer):
     poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
     question = serializers.PrimaryKeyRelatedField(queryset=Question.objects.all())
@@ -124,6 +109,7 @@ class PollNextQuestionSerializer(serializers.Serializer):
 
 class PollSetAcceptingAnswersSerializer(serializers.Serializer):
     poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
+    is_accepting_answers = serializers.BooleanField()
 
     def is_poll_valid(self):
         poll: Poll = self.validated_data["poll"]

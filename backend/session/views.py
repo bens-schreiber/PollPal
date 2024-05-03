@@ -51,14 +51,19 @@ class SessionStart(APIView):
 
 class SessionEnd(APIView):
     queryset = Session.objects.all()
-    serializer_class = SessionEndSerializer
 
-    def delete(self, request, format=None):
+    def delete(self, request, session_id, format=None):
         """Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400."""
 
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        poll: Poll = serializer.is_poll_valid()
+        session: Session = get_object_or_404(Session, pk=session_id)
+
+        if not (Poll.objects.filter(session=session).exists()):
+            return HttpResponseBadRequest("Poll does not exist.")
+
+        poll: Poll = session.poll
+
+        if poll.is_accepting_answers:
+            return HttpResponseBadRequest("Poll is accepting answers.")
 
         poll.delete()
 
@@ -97,8 +102,7 @@ class PollSetAcceptingAnswers(APIView):
         serializer.is_poll_valid()
 
         poll: Poll = serializer.create(serializer.validated_data)
-
-        poll.is_accepting_answers = not poll.is_accepting_answers
+        poll.is_accepting_answers = serializer.validated_data["is_accepting_answers"]
         poll.save()
 
         return rf.Response(PollSerializer(poll).data, status=202)

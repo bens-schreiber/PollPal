@@ -197,11 +197,17 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/session/end:
+  /api/session/{session_id}/end:
     delete:
       operationId: session_end_destroy
       description: Deletes a Poll from a session. If there is no Poll, return 400.
         If the poll is accepting answers, return 400.
+      parameters:
+      - in: path
+        name: session_id
+        schema:
+          type: integer
+        required: true
       tags:
       - session
       security:
@@ -247,6 +253,8 @@ components:
       properties:
         poll:
           type: integer
+        is_accepting_answers:
+          type: boolean
     PollNextQuestion:
       type: object
       properties:
@@ -262,7 +270,10 @@ components:
       properties:
         poll:
           type: integer
+        is_accepting_answers:
+          type: boolean
       required:
+      - is_accepting_answers
       - poll
     PollSubmitResponse:
       type: object
