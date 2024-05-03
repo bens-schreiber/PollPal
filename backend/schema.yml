@@ -31,13 +31,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PollNextQuestion'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PollNextQuestion'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PollNextQuestion'
+              $ref: '#/components/schemas/PollNextQuestionRequest'
         required: true
       security:
       - cookieAuth: []
@@ -59,13 +53,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswers'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswers'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswers'
+              $ref: '#/components/schemas/PatchedPollSetAcceptingAnswersRequest'
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -86,13 +74,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PollSubmitResponse'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PollSubmitResponse'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PollSubmitResponse'
+              $ref: '#/components/schemas/PollSubmitResponseRequest'
         required: true
       security:
       - cookieAuth: []
@@ -115,13 +97,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuestionCreate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/QuestionCreate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/QuestionCreate'
+              $ref: '#/components/schemas/QuestionCreateRequest'
         required: true
       security:
       - cookieAuth: []
@@ -160,13 +136,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Session'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Session'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Session'
+              $ref: '#/components/schemas/SessionRequest'
         required: true
       security:
       - cookieAuth: []
@@ -227,13 +197,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionStart'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/SessionStart'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/SessionStart'
+              $ref: '#/components/schemas/SessionStartRequest'
         required: true
       security:
       - cookieAuth: []
@@ -248,7 +212,7 @@ paths:
           description: ''
 components:
   schemas:
-    PatchedPollSetAcceptingAnswers:
+    PatchedPollSetAcceptingAnswersRequest:
       type: object
       properties:
         poll:
@@ -256,6 +220,16 @@ components:
         is_accepting_answers:
           type: boolean
     PollNextQuestion:
+      type: object
+      properties:
+        poll:
+          type: integer
+        question:
+          type: integer
+      required:
+      - poll
+      - question
+    PollNextQuestionRequest:
       type: object
       properties:
         poll:
@@ -276,6 +250,16 @@ components:
       - is_accepting_answers
       - poll
     PollSubmitResponse:
+      type: object
+      properties:
+        poll:
+          type: integer
+        answer:
+          type: integer
+      required:
+      - answer
+      - poll
+    PollSubmitResponseRequest:
       type: object
       properties:
         poll:
@@ -309,22 +293,63 @@ components:
       required:
       - answer
       - is_correct
+    QuestionCreateAnswerInputRequest:
+      type: object
+      properties:
+        answer:
+          type: string
+          minLength: 1
+          maxLength: 4095
+        is_correct:
+          type: boolean
+      required:
+      - answer
+      - is_correct
+    QuestionCreateRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+          minLength: 1
+          maxLength: 4095
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionCreateAnswerInputRequest'
+      required:
+      - answers
+      - prompt
     Session:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        poll:
-          type: integer
         label:
           type: string
           maxLength: 255
       required:
-      - id
       - label
-      - poll
+    SessionRequest:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+      - label
     SessionStart:
+      type: object
+      properties:
+        session:
+          type: integer
+        question:
+          type: integer
+      required:
+      - question
+      - session
+    SessionStartRequest:
       type: object
       properties:
         session:

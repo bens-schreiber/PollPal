@@ -14,7 +14,7 @@
  */
 import ApiClient from "../ApiClient";
 import QuestionCreate from '../model/QuestionCreate';
-import QuestionCreateAnswerInput from '../model/QuestionCreateAnswerInput';
+import QuestionCreateRequest from '../model/QuestionCreateRequest';
 
 /**
 * Question service.
@@ -45,36 +45,16 @@ export default class QuestionApi {
 
     /**
      * Creates a question with the provided prompt and answers.
-     * @param {module:model/QuestionCreate} body 
-     * @param {String} prompt 
-     * @param {Array.<module:model/QuestionCreateAnswerInput>} answers 
-     * @param {String} prompt 
-     * @param {Array.<module:model/QuestionCreateAnswerInput>} answers 
+     * @param {module:model/QuestionCreateRequest} body 
      * @param {module:api/QuestionApi~questionCreateCreateCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    questionCreateCreate(body, prompt, answers, prompt, answers, callback) {
+    questionCreateCreate(body, callback) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
         throw new Error("Missing the required parameter 'body' when calling questionCreateCreate");
-      }
-      // verify the required parameter 'prompt' is set
-      if (prompt === undefined || prompt === null) {
-        throw new Error("Missing the required parameter 'prompt' when calling questionCreateCreate");
-      }
-      // verify the required parameter 'answers' is set
-      if (answers === undefined || answers === null) {
-        throw new Error("Missing the required parameter 'answers' when calling questionCreateCreate");
-      }
-      // verify the required parameter 'prompt' is set
-      if (prompt === undefined || prompt === null) {
-        throw new Error("Missing the required parameter 'prompt' when calling questionCreateCreate");
-      }
-      // verify the required parameter 'answers' is set
-      if (answers === undefined || answers === null) {
-        throw new Error("Missing the required parameter 'answers' when calling questionCreateCreate");
       }
 
       let pathParams = {
@@ -87,11 +67,11 @@ export default class QuestionApi {
         
       };
       let formParams = {
-        'prompt': prompt,'answers': this.apiClient.buildCollectionParam(answers, 'multi'),'prompt': prompt,'answers': this.apiClient.buildCollectionParam(answers, 'multi')
+        
       };
 
       let authNames = ['basicAuth', 'cookieAuth'];
-      let contentTypes = ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
+      let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = QuestionCreate;
 

@@ -13,10 +13,12 @@
  *
  */
 import ApiClient from "../ApiClient";
-import PatchedPollSetAcceptingAnswers from '../model/PatchedPollSetAcceptingAnswers';
+import PatchedPollSetAcceptingAnswersRequest from '../model/PatchedPollSetAcceptingAnswersRequest';
 import PollNextQuestion from '../model/PollNextQuestion';
+import PollNextQuestionRequest from '../model/PollNextQuestionRequest';
 import PollSetAcceptingAnswers from '../model/PollSetAcceptingAnswers';
 import PollSubmitResponse from '../model/PollSubmitResponse';
+import PollSubmitResponseRequest from '../model/PollSubmitResponseRequest';
 
 /**
 * Poll service.
@@ -90,36 +92,16 @@ export default class PollApi {
      */
 
     /**
-     * @param {module:model/PollNextQuestion} body 
-     * @param {Number} poll 
-     * @param {Number} question 
-     * @param {Number} poll 
-     * @param {Number} question 
+     * @param {module:model/PollNextQuestionRequest} body 
      * @param {module:api/PollApi~pollNextQuestionCreateCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    pollNextQuestionCreate(body, poll, question, poll, question, callback) {
+    pollNextQuestionCreate(body, callback) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
         throw new Error("Missing the required parameter 'body' when calling pollNextQuestionCreate");
-      }
-      // verify the required parameter 'poll' is set
-      if (poll === undefined || poll === null) {
-        throw new Error("Missing the required parameter 'poll' when calling pollNextQuestionCreate");
-      }
-      // verify the required parameter 'question' is set
-      if (question === undefined || question === null) {
-        throw new Error("Missing the required parameter 'question' when calling pollNextQuestionCreate");
-      }
-      // verify the required parameter 'poll' is set
-      if (poll === undefined || poll === null) {
-        throw new Error("Missing the required parameter 'poll' when calling pollNextQuestionCreate");
-      }
-      // verify the required parameter 'question' is set
-      if (question === undefined || question === null) {
-        throw new Error("Missing the required parameter 'question' when calling pollNextQuestionCreate");
       }
 
       let pathParams = {
@@ -132,11 +114,11 @@ export default class PollApi {
         
       };
       let formParams = {
-        'poll': poll,'question': question,'poll': poll,'question': question
+        
       };
 
       let authNames = ['basicAuth', 'cookieAuth'];
-      let contentTypes = ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
+      let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = PollNextQuestion;
 
@@ -156,11 +138,7 @@ export default class PollApi {
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {module:model/PatchedPollSetAcceptingAnswers} opts.body 
-     * @param {Number} opts.poll 
-     * @param {Boolean} opts.isAcceptingAnswers 
-     * @param {Number} opts.poll 
-     * @param {Boolean} opts.isAcceptingAnswers 
+     * @param {module:model/PatchedPollSetAcceptingAnswersRequest} opts.body 
      * @param {module:api/PollApi~pollSetAcceptingAnswerPartialUpdateCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
@@ -178,11 +156,11 @@ export default class PollApi {
         
       };
       let formParams = {
-        'poll': opts['poll'],'is_accepting_answers': opts['isAcceptingAnswers'],'poll': opts['poll'],'is_accepting_answers': opts['isAcceptingAnswers']
+        
       };
 
       let authNames = ['basicAuth', 'cookieAuth'];
-      let contentTypes = ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
+      let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = PollSetAcceptingAnswers;
 
@@ -201,36 +179,16 @@ export default class PollApi {
      */
 
     /**
-     * @param {module:model/PollSubmitResponse} body 
-     * @param {Number} poll 
-     * @param {Number} answer 
-     * @param {Number} poll 
-     * @param {Number} answer 
+     * @param {module:model/PollSubmitResponseRequest} body 
      * @param {module:api/PollApi~pollSubmitResponseUpdateCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    pollSubmitResponseUpdate(body, poll, answer, poll, answer, callback) {
+    pollSubmitResponseUpdate(body, callback) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
         throw new Error("Missing the required parameter 'body' when calling pollSubmitResponseUpdate");
-      }
-      // verify the required parameter 'poll' is set
-      if (poll === undefined || poll === null) {
-        throw new Error("Missing the required parameter 'poll' when calling pollSubmitResponseUpdate");
-      }
-      // verify the required parameter 'answer' is set
-      if (answer === undefined || answer === null) {
-        throw new Error("Missing the required parameter 'answer' when calling pollSubmitResponseUpdate");
-      }
-      // verify the required parameter 'poll' is set
-      if (poll === undefined || poll === null) {
-        throw new Error("Missing the required parameter 'poll' when calling pollSubmitResponseUpdate");
-      }
-      // verify the required parameter 'answer' is set
-      if (answer === undefined || answer === null) {
-        throw new Error("Missing the required parameter 'answer' when calling pollSubmitResponseUpdate");
       }
 
       let pathParams = {
@@ -243,11 +201,11 @@ export default class PollApi {
         
       };
       let formParams = {
-        'poll': poll,'answer': answer,'poll': poll,'answer': answer
+        
       };
 
       let authNames = ['basicAuth', 'cookieAuth'];
-      let contentTypes = ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
+      let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = PollSubmitResponse;
 

@@ -3,16 +3,12 @@ from .models import Session, Poll, Question, Response, Answer
 
 
 class SessionSerializer(serializers.ModelSerializer):
-    poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
-
     class Meta:
         model = Session
         fields = "__all__"
 
 
 class PollSerializer(serializers.ModelSerializer):
-    session = serializers.PrimaryKeyRelatedField(queryset=Session.objects.all())
-
     class Meta:
         model = Poll
         fields = "__all__"
@@ -26,17 +22,12 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class ResponseSerializer(serializers.ModelSerializer):
-    answer = serializers.PrimaryKeyRelatedField(queryset=Answer.objects.all())
-    poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
-
     class Meta:
         model = Response
         fields = "__all__"
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    question = serializers.PrimaryKeyRelatedField(queryset=Question.objects.all())
-
     class Meta:
         model = Answer
         fields = "__all__"

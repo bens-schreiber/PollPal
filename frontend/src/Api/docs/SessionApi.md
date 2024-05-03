@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="sessionCreate"></a>
 # **sessionCreate**
-> Session sessionCreate(body, id, poll, label, id, poll, label)
+> Session sessionCreate(body)
 
 
 
@@ -32,15 +32,9 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.SessionApi();
-let body = new PollPalApi.Session(); // Session | 
-let id = 56; // Number | 
-let poll = 56; // Number | 
-let label = "label_example"; // String | 
-let id = 56; // Number | 
-let poll = 56; // Number | 
-let label = "label_example"; // String | 
+let body = new PollPalApi.SessionRequest(); // SessionRequest | 
 
-apiInstance.sessionCreate(body, id, poll, label, id, poll, label, (error, data, response) => {
+apiInstance.sessionCreate(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -53,13 +47,7 @@ apiInstance.sessionCreate(body, id, poll, label, id, poll, label, (error, data, 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Session**](Session.md)|  | 
- **id** | **Number**|  | 
- **poll** | **Number**|  | 
- **label** | **String**|  | 
- **id** | **Number**|  | 
- **poll** | **Number**|  | 
- **label** | **String**|  | 
+ **body** | [**SessionRequest**](SessionRequest.md)|  | 
 
 ### Return type
 
@@ -71,7 +59,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 <a name="sessionDestroy"></a>
@@ -229,7 +217,7 @@ This endpoint does not need any parameter.
 
 <a name="sessionStartCreate"></a>
 # **sessionStartCreate**
-> SessionStart sessionStartCreate(body, session, question, session, question)
+> SessionStart sessionStartCreate(body)
 
 
 
@@ -251,13 +239,9 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.SessionApi();
-let body = new PollPalApi.SessionStart(); // SessionStart | 
-let session = 56; // Number | 
-let question = 56; // Number | 
-let session = 56; // Number | 
-let question = 56; // Number | 
+let body = new PollPalApi.SessionStartRequest(); // SessionStartRequest | 
 
-apiInstance.sessionStartCreate(body, session, question, session, question, (error, data, response) => {
+apiInstance.sessionStartCreate(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -270,11 +254,7 @@ apiInstance.sessionStartCreate(body, session, question, session, question, (erro
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SessionStart**](SessionStart.md)|  | 
- **session** | **Number**|  | 
- **question** | **Number**|  | 
- **session** | **Number**|  | 
- **question** | **Number**|  | 
+ **body** | [**SessionStartRequest**](SessionStartRequest.md)|  | 
 
 ### Return type
 
@@ -286,6 +266,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 

@@ -1,7 +1,7 @@
-# PollPalApi.Session
+# PollPalApi.QuestionCreateAnswerInputRequest
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
-**label** | **String** |  | 
+**answer** | **String** |  | 
+**isCorrect** | **Boolean** |  | 

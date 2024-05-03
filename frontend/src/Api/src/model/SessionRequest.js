@@ -15,14 +15,14 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The Session model module.
- * @module model/Session
+ * The SessionRequest model module.
+ * @module model/SessionRequest
  * @version 1.0.0
  */
-export default class Session {
+export default class SessionRequest {
   /**
-   * Constructs a new <code>Session</code>.
-   * @alias module:model/Session
+   * Constructs a new <code>SessionRequest</code>.
+   * @alias module:model/SessionRequest
    * @class
    * @param label {String} 
    */
@@ -31,17 +31,15 @@ export default class Session {
   }
 
   /**
-   * Constructs a <code>Session</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>SessionRequest</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/Session} obj Optional instance to populate.
-   * @return {module:model/Session} The populated <code>Session</code> instance.
+   * @param {module:model/SessionRequest} obj Optional instance to populate.
+   * @return {module:model/SessionRequest} The populated <code>SessionRequest</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new Session();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
+      obj = obj || new SessionRequest();
       if (data.hasOwnProperty('label'))
         obj.label = ApiClient.convertToType(data['label'], 'String');
     }
@@ -50,12 +48,7 @@ export default class Session {
 }
 
 /**
- * @member {Number} id
- */
-Session.prototype.id = undefined;
-
-/**
  * @member {String} label
  */
-Session.prototype.label = undefined;
+SessionRequest.prototype.label = undefined;
 

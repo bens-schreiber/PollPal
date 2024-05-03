@@ -13,14 +13,20 @@
  *
  */
 import ApiClient from './ApiClient';
-import PatchedPollSetAcceptingAnswers from './model/PatchedPollSetAcceptingAnswers';
+import PatchedPollSetAcceptingAnswersRequest from './model/PatchedPollSetAcceptingAnswersRequest';
 import PollNextQuestion from './model/PollNextQuestion';
+import PollNextQuestionRequest from './model/PollNextQuestionRequest';
 import PollSetAcceptingAnswers from './model/PollSetAcceptingAnswers';
 import PollSubmitResponse from './model/PollSubmitResponse';
+import PollSubmitResponseRequest from './model/PollSubmitResponseRequest';
 import QuestionCreate from './model/QuestionCreate';
 import QuestionCreateAnswerInput from './model/QuestionCreateAnswerInput';
+import QuestionCreateAnswerInputRequest from './model/QuestionCreateAnswerInputRequest';
+import QuestionCreateRequest from './model/QuestionCreateRequest';
 import Session from './model/Session';
+import SessionRequest from './model/SessionRequest';
 import SessionStart from './model/SessionStart';
+import SessionStartRequest from './model/SessionStartRequest';
 import PollApi from './api/PollApi';
 import QuestionApi from './api/QuestionApi';
 import SessionApi from './api/SessionApi';
@@ -64,16 +70,22 @@ export {
     ApiClient,
 
     /**
-     * The PatchedPollSetAcceptingAnswers model constructor.
-     * @property {module:model/PatchedPollSetAcceptingAnswers}
+     * The PatchedPollSetAcceptingAnswersRequest model constructor.
+     * @property {module:model/PatchedPollSetAcceptingAnswersRequest}
      */
-    PatchedPollSetAcceptingAnswers,
+    PatchedPollSetAcceptingAnswersRequest,
 
     /**
      * The PollNextQuestion model constructor.
      * @property {module:model/PollNextQuestion}
      */
     PollNextQuestion,
+
+    /**
+     * The PollNextQuestionRequest model constructor.
+     * @property {module:model/PollNextQuestionRequest}
+     */
+    PollNextQuestionRequest,
 
     /**
      * The PollSetAcceptingAnswers model constructor.
@@ -88,6 +100,12 @@ export {
     PollSubmitResponse,
 
     /**
+     * The PollSubmitResponseRequest model constructor.
+     * @property {module:model/PollSubmitResponseRequest}
+     */
+    PollSubmitResponseRequest,
+
+    /**
      * The QuestionCreate model constructor.
      * @property {module:model/QuestionCreate}
      */
@@ -100,16 +118,40 @@ export {
     QuestionCreateAnswerInput,
 
     /**
+     * The QuestionCreateAnswerInputRequest model constructor.
+     * @property {module:model/QuestionCreateAnswerInputRequest}
+     */
+    QuestionCreateAnswerInputRequest,
+
+    /**
+     * The QuestionCreateRequest model constructor.
+     * @property {module:model/QuestionCreateRequest}
+     */
+    QuestionCreateRequest,
+
+    /**
      * The Session model constructor.
      * @property {module:model/Session}
      */
     Session,
 
     /**
+     * The SessionRequest model constructor.
+     * @property {module:model/SessionRequest}
+     */
+    SessionRequest,
+
+    /**
      * The SessionStart model constructor.
      * @property {module:model/SessionStart}
      */
     SessionStart,
+
+    /**
+     * The SessionStartRequest model constructor.
+     * @property {module:model/SessionStartRequest}
+     */
+    SessionStartRequest,
 
     /**
     * The PollApi service constructor.

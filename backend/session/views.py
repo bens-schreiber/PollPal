@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.generics import GenericAPIView
 import rest_framework.response as rf
 from .models import *
 from .serializers import *
@@ -49,8 +50,7 @@ class SessionStart(APIView):
         return rf.Response(PollSerializer(poll).data, status=201)
 
 
-class SessionEnd(APIView):
-    queryset = Session.objects.all()
+class SessionEnd(GenericAPIView):
 
     def delete(self, request, session_id, format=None):
         """Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400."""
@@ -108,9 +108,7 @@ class PollSetAcceptingAnswers(APIView):
         return rf.Response(PollSerializer(poll).data, status=202)
 
 
-class PollGetAnswer(APIView):
-    queryset = Poll.objects.all()
-
+class PollGetAnswer(GenericAPIView):
     def get(self, request, poll_id=None, format=None):
         poll: Poll = get_object_or_404(Poll, pk=poll_id)
 

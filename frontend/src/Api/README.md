@@ -113,14 +113,20 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
- - [PollPalApi.PatchedPollSetAcceptingAnswers](docs/PatchedPollSetAcceptingAnswers.md)
+ - [PollPalApi.PatchedPollSetAcceptingAnswersRequest](docs/PatchedPollSetAcceptingAnswersRequest.md)
  - [PollPalApi.PollNextQuestion](docs/PollNextQuestion.md)
+ - [PollPalApi.PollNextQuestionRequest](docs/PollNextQuestionRequest.md)
  - [PollPalApi.PollSetAcceptingAnswers](docs/PollSetAcceptingAnswers.md)
  - [PollPalApi.PollSubmitResponse](docs/PollSubmitResponse.md)
+ - [PollPalApi.PollSubmitResponseRequest](docs/PollSubmitResponseRequest.md)
  - [PollPalApi.QuestionCreate](docs/QuestionCreate.md)
  - [PollPalApi.QuestionCreateAnswerInput](docs/QuestionCreateAnswerInput.md)
+ - [PollPalApi.QuestionCreateAnswerInputRequest](docs/QuestionCreateAnswerInputRequest.md)
+ - [PollPalApi.QuestionCreateRequest](docs/QuestionCreateRequest.md)
  - [PollPalApi.Session](docs/Session.md)
+ - [PollPalApi.SessionRequest](docs/SessionRequest.md)
  - [PollPalApi.SessionStart](docs/SessionStart.md)
+ - [PollPalApi.SessionStartRequest](docs/SessionStartRequest.md)
 
 ## Documentation for Authorization
 

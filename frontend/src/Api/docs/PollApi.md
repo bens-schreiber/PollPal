@@ -63,7 +63,7 @@ null (empty response body)
 
 <a name="pollNextQuestionCreate"></a>
 # **pollNextQuestionCreate**
-> PollNextQuestion pollNextQuestionCreate(body, poll, question, poll, question)
+> PollNextQuestion pollNextQuestionCreate(body)
 
 
 
@@ -83,13 +83,9 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.PollApi();
-let body = new PollPalApi.PollNextQuestion(); // PollNextQuestion | 
-let poll = 56; // Number | 
-let question = 56; // Number | 
-let poll = 56; // Number | 
-let question = 56; // Number | 
+let body = new PollPalApi.PollNextQuestionRequest(); // PollNextQuestionRequest | 
 
-apiInstance.pollNextQuestionCreate(body, poll, question, poll, question, (error, data, response) => {
+apiInstance.pollNextQuestionCreate(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -102,11 +98,7 @@ apiInstance.pollNextQuestionCreate(body, poll, question, poll, question, (error,
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PollNextQuestion**](PollNextQuestion.md)|  | 
- **poll** | **Number**|  | 
- **question** | **Number**|  | 
- **poll** | **Number**|  | 
- **question** | **Number**|  | 
+ **body** | [**PollNextQuestionRequest**](PollNextQuestionRequest.md)|  | 
 
 ### Return type
 
@@ -118,7 +110,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 <a name="pollSetAcceptingAnswerPartialUpdate"></a>
@@ -144,11 +136,7 @@ cookieAuth.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PollPalApi.PollApi();
 let opts = { 
-  'body': new PollPalApi.PatchedPollSetAcceptingAnswers(), // PatchedPollSetAcceptingAnswers | 
-  'poll': 56, // Number | 
-  'isAcceptingAnswers': true, // Boolean | 
-  'poll': 56, // Number | 
-  'isAcceptingAnswers': true // Boolean | 
+  'body': new PollPalApi.PatchedPollSetAcceptingAnswersRequest() // PatchedPollSetAcceptingAnswersRequest | 
 };
 apiInstance.pollSetAcceptingAnswerPartialUpdate(opts, (error, data, response) => {
   if (error) {
@@ -163,11 +151,7 @@ apiInstance.pollSetAcceptingAnswerPartialUpdate(opts, (error, data, response) =>
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PatchedPollSetAcceptingAnswers**](PatchedPollSetAcceptingAnswers.md)|  | [optional] 
- **poll** | **Number**|  | [optional] 
- **isAcceptingAnswers** | **Boolean**|  | [optional] 
- **poll** | **Number**|  | [optional] 
- **isAcceptingAnswers** | **Boolean**|  | [optional] 
+ **body** | [**PatchedPollSetAcceptingAnswersRequest**](PatchedPollSetAcceptingAnswersRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -179,12 +163,12 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 <a name="pollSubmitResponseUpdate"></a>
 # **pollSubmitResponseUpdate**
-> PollSubmitResponse pollSubmitResponseUpdate(body, poll, answer, poll, answer)
+> PollSubmitResponse pollSubmitResponseUpdate(body)
 
 
 
@@ -204,13 +188,9 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.PollApi();
-let body = new PollPalApi.PollSubmitResponse(); // PollSubmitResponse | 
-let poll = 56; // Number | 
-let answer = 56; // Number | 
-let poll = 56; // Number | 
-let answer = 56; // Number | 
+let body = new PollPalApi.PollSubmitResponseRequest(); // PollSubmitResponseRequest | 
 
-apiInstance.pollSubmitResponseUpdate(body, poll, answer, poll, answer, (error, data, response) => {
+apiInstance.pollSubmitResponseUpdate(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -223,11 +203,7 @@ apiInstance.pollSubmitResponseUpdate(body, poll, answer, poll, answer, (error, d
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PollSubmitResponse**](PollSubmitResponse.md)|  | 
- **poll** | **Number**|  | 
- **answer** | **Number**|  | 
- **poll** | **Number**|  | 
- **answer** | **Number**|  | 
+ **body** | [**PollSubmitResponseRequest**](PollSubmitResponseRequest.md)|  | 
 
 ### Return type
 
@@ -239,6 +215,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 

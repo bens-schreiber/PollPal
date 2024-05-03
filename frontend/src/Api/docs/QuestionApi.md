@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 <a name="questionCreateCreate"></a>
 # **questionCreateCreate**
-> QuestionCreate questionCreateCreate(body, prompt, answers, prompt, answers)
+> QuestionCreate questionCreateCreate(body)
 
 
 
@@ -30,13 +30,9 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.QuestionApi();
-let body = new PollPalApi.QuestionCreate(); // QuestionCreate | 
-let prompt = "prompt_example"; // String | 
-let answers = [new PollPalApi.QuestionCreateAnswerInput()]; // [QuestionCreateAnswerInput] | 
-let prompt = "prompt_example"; // String | 
-let answers = [new PollPalApi.QuestionCreateAnswerInput()]; // [QuestionCreateAnswerInput] | 
+let body = new PollPalApi.QuestionCreateRequest(); // QuestionCreateRequest | 
 
-apiInstance.questionCreateCreate(body, prompt, answers, prompt, answers, (error, data, response) => {
+apiInstance.questionCreateCreate(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -49,11 +45,7 @@ apiInstance.questionCreateCreate(body, prompt, answers, prompt, answers, (error,
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**QuestionCreate**](QuestionCreate.md)|  | 
- **prompt** | **String**|  | 
- **answers** | [**[QuestionCreateAnswerInput]**](QuestionCreateAnswerInput.md)|  | 
- **prompt** | **String**|  | 
- **answers** | [**[QuestionCreateAnswerInput]**](QuestionCreateAnswerInput.md)|  | 
+ **body** | [**QuestionCreateRequest**](QuestionCreateRequest.md)|  | 
 
 ### Return type
 
@@ -65,6 +57,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 

@@ -1,7 +1,7 @@
-# PollPalApi.Session
+# PollPalApi.SessionStartRequest
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
-**label** | **String** |  | 
+**session** | **Number** |  | 
+**question** | **Number** |  | 
