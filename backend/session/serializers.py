@@ -76,12 +76,3 @@ class PollSetAcceptingAnswersSerializer(serializers.Serializer):
 
         poll: Poll = validated_data.pop("poll")
         return poll
-
-
-class PollGetAnswerSerializer(serializers.Serializer):
-    poll = serializers.PrimaryKeyRelatedField(queryset=Poll.objects.all())
-
-    def create(self, validated_data):
-
-        poll: Poll = validated_data.pop("poll")
-        return poll

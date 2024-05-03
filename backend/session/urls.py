@@ -16,7 +16,7 @@ urlpatterns = [
         name="poll-set-accepting-answer",
     ),
     path(
-        "poll/correct-answer",
+        "poll/<int:poll_id>/answer",
         PollGetAnswer.as_view(),
         name="poll-get-correct-answer",
     ),

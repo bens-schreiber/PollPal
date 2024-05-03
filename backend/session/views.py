@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 import rest_framework.response as rf
 from .models import *
@@ -102,12 +103,9 @@ class PollSetAcceptingAnswers(APIView):
 
 class PollGetAnswer(APIView):
     queryset = Poll.objects.all()
-    serializer_class = PollGetAnswerSerializer
 
-    def get(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        poll: Poll = serializer.save()
+    def get(self, request, poll_id=None, format=None):
+        poll: Poll = get_object_or_404(Poll, pk=poll_id)
 
         if poll.is_accepting_answers:
             return HttpResponseBadRequest("Poll is still accepting answers")

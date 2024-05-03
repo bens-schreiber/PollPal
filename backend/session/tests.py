@@ -102,7 +102,9 @@ class TestPollService(TestCase):
         self.client = Client()
         self.nextQuestionURL = reverse("pollpal:poll-next-question")
         self.setAcceptingAnswerURL = reverse("pollpal:poll-set-accepting-answer")
-        self.getAnswerURL = reverse("pollpal:poll-get-correct-answer")
+        self.getAnswerURL = lambda poll_id: reverse(
+            "pollpal:poll-get-correct-answer", kwargs={"poll_id": poll_id}
+        )
 
     def test_nextQuestion_setNewQuestion_setsNewQuestion(self):
 
@@ -229,11 +231,11 @@ class TestPollService(TestCase):
             answer="Test Correct Answer", question=question, is_correct=True
         )
 
-        data = {"poll": poll.id}
+        params = {"poll": poll.id}
 
         # Act
         response = self.client.get(
-            self.getAnswerURL, json.dumps(data), content_type="application/json"
+            self.getAnswerURL(poll.id), params=params, content_type="application/json"
         )
 
         # Assert
@@ -248,11 +250,11 @@ class TestPollService(TestCase):
             answer="Test Correct Answer", question=question, is_correct=True
         )
 
-        data = {"poll": poll.id}
+        params = {"poll": poll.id}
 
         # Act
         response = self.client.get(
-            self.getAnswerURL, json.dumps(data), content_type="application/json"
+            self.getAnswerURL(poll.id), params=params, content_type="application/json"
         )
 
         # Assert
