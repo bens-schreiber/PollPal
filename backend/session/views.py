@@ -202,3 +202,15 @@ class PollSubmitResponse(APIView):
         response = Response.objects.create(poll=poll, answer=answer)
 
         return rf.Response(ResponseSerializer(response).data, status=201)
+
+
+@extend_schema(responses=ResponseSerializer(many=True))
+class PollResponsesList(APIView):
+    queryset = Response.objects.all()
+
+    def get(self, request, poll_id, format=None):
+        """Returns all responses for a poll with the provided poll_id."""
+        poll = get_object_or_404(Poll, pk=poll_id)
+        responses = Response.objects.filter(poll=poll)
+        serializer = ResponseSerializer(responses, many=True)
+        return rf.Response(serializer.data, status=200)

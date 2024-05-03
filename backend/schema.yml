@@ -71,6 +71,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/Poll'
           description: ''
+  /api/poll/responses/{poll_id}:
+    get:
+      operationId: poll_responses_list
+      description: Returns all responses for a poll with the provided poll_id.
+      parameters:
+      - in: path
+        name: poll_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - poll
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Response'
+          description: ''
   /api/poll/session/{session_id}:
     get:
       operationId: poll_session_retrieve

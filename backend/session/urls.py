@@ -44,4 +44,9 @@ urlpatterns = [
         QuestionFromPoll.as_view(),
         name="question-from-poll",
     ),
+    path(
+        "poll/responses/<int:poll_id>",
+        PollResponsesList.as_view(),
+        name="poll-responses",
+    ),
 ]

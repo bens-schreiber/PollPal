@@ -368,7 +368,38 @@ const StartPollForm = ({ session, questions }) => {
         </FormBox>
       )}
       {pollStarted && <>Session Code: {session.id}</>}
+
+      {pollStarted && <FindResponses poll={poll} />}
     </FormPaper>
+  );
+};
+
+const FindResponses = ({ poll }) => {
+  const [responses, setResponses] = useState([]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const pollApi = new PollPalApi().pollApi;
+      try {
+        const response = await pollApi.pollResponsesList(poll.id);
+        setResponses(response);
+      } catch {}
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [poll]);
+
+  return (
+    <Box display="flex" flexDirection="column" gap={3}>
+      <Typography variant="h5" component="h2">
+        Responses
+      </Typography>
+      {responses.map((response, index) => (
+        <Typography key={index}>
+          Response {index + 1}: {response.id}
+        </Typography>
+      ))}
+    </Box>
   );
 };
 

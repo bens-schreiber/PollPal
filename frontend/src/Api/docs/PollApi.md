@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**pollAnswerRetrieve**](PollApi.md#pollAnswerRetrieve) | **GET** /api/poll/{poll_id}/answer | 
 [**pollNextQuestionCreate**](PollApi.md#pollNextQuestionCreate) | **POST** /api/poll/next-question | 
+[**pollResponsesList**](PollApi.md#pollResponsesList) | **GET** /api/poll/responses/{poll_id} | 
 [**pollRetrieve**](PollApi.md#pollRetrieve) | **GET** /api/poll/{poll_id} | 
 [**pollSessionRetrieve**](PollApi.md#pollSessionRetrieve) | **GET** /api/poll/session/{session_id} | 
 [**pollSetAcceptingAnswerPartialUpdate**](PollApi.md#pollSetAcceptingAnswerPartialUpdate) | **PATCH** /api/poll/set-accepting-answer | 
@@ -111,6 +112,59 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="pollResponsesList"></a>
+# **pollResponsesList**
+> [Response] pollResponsesList(poll_id)
+
+
+
+Returns all responses for a poll with the provided poll_id.
+
+### Example
+```javascript
+import {PollPalApi} from 'poll_pal_api';
+let defaultClient = PollPalApi.ApiClient.instance;
+// Configure HTTP basic authorization: basicAuth
+let basicAuth = defaultClient.authentications['basicAuth'];
+basicAuth.username = 'YOUR USERNAME';
+basicAuth.password = 'YOUR PASSWORD';
+
+// Configure API key authorization: cookieAuth
+let cookieAuth = defaultClient.authentications['cookieAuth'];
+cookieAuth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//cookieAuth.apiKeyPrefix = 'Token';
+
+let apiInstance = new PollPalApi.PollApi();
+let poll_id = 56; // Number | 
+
+apiInstance.pollResponsesList(poll_id).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **poll_id** | **Number**|  | 
+
+### Return type
+
+[**[Response]**](Response.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 <a name="pollRetrieve"></a>

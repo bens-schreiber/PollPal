@@ -100,6 +100,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *PollPalApi.PollApi* | [**pollAnswerRetrieve**](docs/PollApi.md#pollAnswerRetrieve) | **GET** /api/poll/{poll_id}/answer | 
 *PollPalApi.PollApi* | [**pollNextQuestionCreate**](docs/PollApi.md#pollNextQuestionCreate) | **POST** /api/poll/next-question | 
+*PollPalApi.PollApi* | [**pollResponsesList**](docs/PollApi.md#pollResponsesList) | **GET** /api/poll/responses/{poll_id} | 
 *PollPalApi.PollApi* | [**pollRetrieve**](docs/PollApi.md#pollRetrieve) | **GET** /api/poll/{poll_id} | 
 *PollPalApi.PollApi* | [**pollSessionRetrieve**](docs/PollApi.md#pollSessionRetrieve) | **GET** /api/poll/session/{session_id} | 
 *PollPalApi.PollApi* | [**pollSetAcceptingAnswerPartialUpdate**](docs/PollApi.md#pollSetAcceptingAnswerPartialUpdate) | **PATCH** /api/poll/set-accepting-answer | 
