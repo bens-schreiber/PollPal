@@ -113,7 +113,7 @@ Name | Type | Description  | Notes
 
 <a name="pollSetAcceptingAnswerPartialUpdate"></a>
 # **pollSetAcceptingAnswerPartialUpdate**
-> Poll pollSetAcceptingAnswerPartialUpdate(opts)
+> Poll pollSetAcceptingAnswerPartialUpdate(body)
 
 
 
@@ -133,10 +133,9 @@ cookieAuth.apiKey = 'YOUR API KEY';
 //cookieAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new PollPalApi.PollApi();
-let opts = { 
-  'body': new PollPalApi.PatchedPollSetAcceptingAnswers() // PatchedPollSetAcceptingAnswers | 
-};
-apiInstance.pollSetAcceptingAnswerPartialUpdate(opts).then((data) => {
+let body = new PollPalApi.PollSetAcceptingAnswers(); // PollSetAcceptingAnswers | 
+
+apiInstance.pollSetAcceptingAnswerPartialUpdate(body).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 }, (error) => {
   console.error(error);
@@ -148,7 +147,7 @@ apiInstance.pollSetAcceptingAnswerPartialUpdate(opts).then((data) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PatchedPollSetAcceptingAnswers**](PatchedPollSetAcceptingAnswers.md)|  | [optional] 
+ **body** | [**PollSetAcceptingAnswers**](PollSetAcceptingAnswers.md)|  | 
 
 ### Return type
 

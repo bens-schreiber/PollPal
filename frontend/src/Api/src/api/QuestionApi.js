@@ -13,6 +13,7 @@
  *
  */
 import ApiClient from "../ApiClient";
+import Answer from '../model/Answer';
 import Question from '../model/Question';
 import QuestionCreate from '../model/QuestionCreate';
 
@@ -35,6 +36,57 @@ export default class QuestionApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
+
+
+    /**
+     * Returns all answers for a question with the provided question_id.
+     * @param {Number} question_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link Array.<module:model/Answer>} and HTTP response
+     */
+    questionAnswerListWithHttpInfo(question_id) {
+      
+      let postBody = null;
+      // verify the required parameter 'question_id' is set
+      if (question_id === undefined || question_id === null) {
+        throw new Error("Missing the required parameter 'question_id' when calling questionAnswerList");
+      }
+
+      let pathParams = {
+        'question_id': question_id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = [Answer];
+
+      return this.apiClient.callApi(
+        '/api/question/{question_id}/answer', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Returns all answers for a question with the provided question_id.
+     * @param {<&vendorExtensions.x-jsdoc-type>} question_id 
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link Array.<module:model/Answer>}
+     */
+    questionAnswerList(question_id) {
+      return this.questionAnswerListWithHttpInfo(question_id)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
 
 
     /**

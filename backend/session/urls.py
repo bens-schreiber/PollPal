@@ -30,4 +30,5 @@ urlpatterns = [
         QuestionCreate.as_view(),
         name="question-create",
     ),
+    path("question/<int:question_id>/answer", AnswerList.as_view(), name="answer-list"),
 ]

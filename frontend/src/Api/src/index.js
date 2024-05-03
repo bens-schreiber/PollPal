@@ -14,9 +14,9 @@
  */
 import ApiClient from './ApiClient';
 import Answer from './model/Answer';
-import PatchedPollSetAcceptingAnswers from './model/PatchedPollSetAcceptingAnswers';
 import Poll from './model/Poll';
 import PollNextQuestion from './model/PollNextQuestion';
+import PollSetAcceptingAnswers from './model/PollSetAcceptingAnswers';
 import PollSubmitResponse from './model/PollSubmitResponse';
 import Question from './model/Question';
 import QuestionCreate from './model/QuestionCreate';
@@ -73,12 +73,6 @@ export {
     Answer,
 
     /**
-     * The PatchedPollSetAcceptingAnswers model constructor.
-     * @property {module:model/PatchedPollSetAcceptingAnswers}
-     */
-    PatchedPollSetAcceptingAnswers,
-
-    /**
      * The Poll model constructor.
      * @property {module:model/Poll}
      */
@@ -89,6 +83,12 @@ export {
      * @property {module:model/PollNextQuestion}
      */
     PollNextQuestion,
+
+    /**
+     * The PollSetAcceptingAnswers model constructor.
+     * @property {module:model/PollSetAcceptingAnswers}
+     */
+    PollSetAcceptingAnswers,
 
     /**
      * The PollSubmitResponse model constructor.

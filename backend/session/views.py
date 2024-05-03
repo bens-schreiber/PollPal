@@ -20,6 +20,19 @@ class SessionDestroy(generics.DestroyAPIView):
     serializer_class = SessionSerializer
 
 
+@extend_schema(responses=AnswerSerializer(many=True))
+class AnswerList(APIView):
+
+    queryset = Answer.objects.all()
+
+    def get(self, request, question_id, format=None):
+        """Returns all answers for a question with the provided question_id."""
+        get_object_or_404(Question, pk=question_id)
+        answers = Answer.objects.filter(question=question_id)
+        serializer = AnswerSerializer(answers, many=True)
+        return rf.Response(serializer.data, status=200)
+
+
 @extend_schema(responses=QuestionSerializer)
 class QuestionCreate(APIView):
     queryset = Question.objects.all()
@@ -44,10 +57,10 @@ class SessionStart(APIView):
 
     def post(self, request, format=None):
         """Creates a poll for the session with the provided question and answer."""
-        print(request.data)
 
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
+        serializer.is_session_valid()
 
         poll = serializer.create(serializer.validated_data)
 
@@ -81,6 +94,7 @@ class PollNextQuestion(APIView):
 
     def post(self, request, format=None):
 
+        print(request.data)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.is_poll_valid()
@@ -102,7 +116,6 @@ class PollSetAcceptingAnswers(APIView):
     serializer_class = PollSetAcceptingAnswersSerializer
 
     def patch(self, request, format=None):
-
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.is_poll_valid()

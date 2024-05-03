@@ -14,9 +14,9 @@
  */
 import ApiClient from "../ApiClient";
 import Answer from '../model/Answer';
-import PatchedPollSetAcceptingAnswers from '../model/PatchedPollSetAcceptingAnswers';
 import Poll from '../model/Poll';
 import PollNextQuestion from '../model/PollNextQuestion';
+import PollSetAcceptingAnswers from '../model/PollSetAcceptingAnswers';
 import PollSubmitResponse from '../model/PollSubmitResponse';
 import Response from '../model/Response';
 
@@ -140,13 +140,16 @@ export default class PollApi {
 
 
     /**
-     * @param {Object} opts Optional parameters
-     * @param {module:model/PatchedPollSetAcceptingAnswers} opts.body 
+     * @param {module:model/PollSetAcceptingAnswers} body 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Poll} and HTTP response
      */
-    pollSetAcceptingAnswerPartialUpdateWithHttpInfo(opts) {
-      opts = opts || {};
-      let postBody = opts['body'];
+    pollSetAcceptingAnswerPartialUpdateWithHttpInfo(body) {
+      
+      let postBody = body;
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling pollSetAcceptingAnswerPartialUpdate");
+      }
 
       let pathParams = {
         
@@ -174,12 +177,11 @@ export default class PollApi {
     }
 
     /**
-     * @param {Object} opts Optional parameters
-     * @param {module:model/PatchedPollSetAcceptingAnswers} opts.body 
+     * @param {<&vendorExtensions.x-jsdoc-type>} body 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Poll}
      */
-    pollSetAcceptingAnswerPartialUpdate(opts) {
-      return this.pollSetAcceptingAnswerPartialUpdateWithHttpInfo(opts)
+    pollSetAcceptingAnswerPartialUpdate(body) {
+      return this.pollSetAcceptingAnswerPartialUpdateWithHttpInfo(body)
         .then(function(response_and_data) {
           return response_and_data.data;
         });

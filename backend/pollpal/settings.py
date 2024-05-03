@@ -124,6 +124,7 @@ SPECTACULAR_SETTINGS = {
     # Split components into request and response parts where appropriate
     "COMPONENT_SPLIT_REQUEST": False,
     "CAMELIZE_NAMES": False,
+    "COMPONENT_SPLIT_PATCH": False,
 }
 
 # Internationalization

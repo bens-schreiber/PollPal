@@ -102,6 +102,7 @@ Class | Method | HTTP request | Description
 *PollPalApi.PollApi* | [**pollNextQuestionCreate**](docs/PollApi.md#pollNextQuestionCreate) | **POST** /api/poll/next-question | 
 *PollPalApi.PollApi* | [**pollSetAcceptingAnswerPartialUpdate**](docs/PollApi.md#pollSetAcceptingAnswerPartialUpdate) | **PATCH** /api/poll/set-accepting-answer | 
 *PollPalApi.PollApi* | [**pollSubmitResponseUpdate**](docs/PollApi.md#pollSubmitResponseUpdate) | **PUT** /api/poll/submit-response | 
+*PollPalApi.QuestionApi* | [**questionAnswerList**](docs/QuestionApi.md#questionAnswerList) | **GET** /api/question/{question_id}/answer | 
 *PollPalApi.QuestionApi* | [**questionCreateCreate**](docs/QuestionApi.md#questionCreateCreate) | **POST** /api/question/create | 
 *PollPalApi.SessionApi* | [**sessionCreate**](docs/SessionApi.md#sessionCreate) | **POST** /api/session/ | 
 *PollPalApi.SessionApi* | [**sessionDestroy**](docs/SessionApi.md#sessionDestroy) | **DELETE** /api/session/{id} | 
@@ -112,9 +113,9 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [PollPalApi.Answer](docs/Answer.md)
- - [PollPalApi.PatchedPollSetAcceptingAnswers](docs/PatchedPollSetAcceptingAnswers.md)
  - [PollPalApi.Poll](docs/Poll.md)
  - [PollPalApi.PollNextQuestion](docs/PollNextQuestion.md)
+ - [PollPalApi.PollSetAcceptingAnswers](docs/PollSetAcceptingAnswers.md)
  - [PollPalApi.PollSubmitResponse](docs/PollSubmitResponse.md)
  - [PollPalApi.Question](docs/Question.md)
  - [PollPalApi.QuestionCreate](docs/QuestionCreate.md)

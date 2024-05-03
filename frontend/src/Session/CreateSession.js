@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PollPalApi from "../PollPalApi";
 import {
   Button,
@@ -11,6 +11,8 @@ import {
 import QuestionCreate from "../Api/src/model/QuestionCreate";
 import QuestionCreateAnswerInput from "../Api/src/model/QuestionCreateAnswerInput";
 import SessionStart from "../Api/src/model/SessionStart";
+import PollNextQuestion from "../Api/src/model/PollNextQuestion";
+import PollSetAcceptingAnswers from "../Api/src/model/PollSetAcceptingAnswers";
 
 const FormPaper = ({ children }) => (
   <Paper elevation={3} sx={{ m: 3, p: 3 }}>
@@ -118,7 +120,7 @@ const CreateQuestionsForm = ({ onQuestionsCreated }) => {
     const newQuestions = [...questions];
     const newAnswer = new QuestionCreateAnswerInput(
       event.target.value,
-      newQuestions[questionIndex].answers[answerIndex].isCorrect,
+      newQuestions[questionIndex].answers[answerIndex].is_correct,
     );
     newQuestions[questionIndex].answers[answerIndex] = newAnswer;
     setQuestions(newQuestions);
@@ -128,7 +130,7 @@ const CreateQuestionsForm = ({ onQuestionsCreated }) => {
     const newQuestions = [...questions];
     const newAnswer = new QuestionCreateAnswerInput(
       newQuestions[questionIndex].answers[answerIndex].answer,
-      !newQuestions[questionIndex].answers[answerIndex].isCorrect,
+      !newQuestions[questionIndex].answers[answerIndex].is_correct,
     );
     newQuestions[questionIndex].answers[answerIndex] = newAnswer;
     setQuestions(newQuestions);
@@ -236,23 +238,135 @@ const AnswerForm = ({ answer, handleAnswerChange, handleToggleCorrect }) => {
   );
 };
 
+const DisplayingQuestion = ({ question }) => {
+  const [answers, setAnswers] = useState([]);
+
+  useEffect(() => {
+    const questionApi = new PollPalApi().questionApi;
+    const fetchAnswers = async () => {
+      const response = await questionApi.questionAnswerList(question.id);
+      setAnswers(response);
+    };
+
+    fetchAnswers();
+  }, [question]);
+
+  return (
+    <Box display="flex" flexDirection="column" gap={3}>
+      <Typography variant="h5" component="h2">
+        Displaying Question: {question.prompt}
+      </Typography>
+
+      {answers.map((answer, index) => (
+        <Typography key={index}>
+          Answer {index + 1}: {answer.answer}{" "}
+          {answer.is_correct ? "(Correct)" : "(Incorrect)"}
+        </Typography>
+      ))}
+    </Box>
+  );
+};
+
+const NextQuestionButton = ({
+  questionIndex,
+  setQuestionIndex,
+  poll,
+  questions,
+  setIsLoading,
+}) => {
+  const pollApi = new PollPalApi().pollApi;
+
+  const handleNextQuestion = async () => {
+    setIsLoading(true);
+    try {
+      await pollApi.pollNextQuestionCreate(
+        new PollNextQuestion(poll.id, questions[questionIndex + 1].id),
+      );
+      setQuestionIndex(questionIndex + 1);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Button variant="contained" color="primary" onClick={handleNextQuestion}>
+      Next Question
+    </Button>
+  );
+};
+
+const StopAcceptingAnswersButton = ({ poll, setIsLoading }) => {
+  const pollApi = new PollPalApi().pollApi;
+
+  const handleStopAcceptingAnswers = async () => {
+    setIsLoading(true);
+    try {
+      await pollApi.pollSetAcceptingAnswerPartialUpdate(
+        new PollSetAcceptingAnswers(poll.id, false),
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleStopAcceptingAnswers}
+    >
+      Stop Accepting Answers
+    </Button>
+  );
+};
+
 const StartPollForm = ({ session, questions }) => {
   const sessionApi = new PollPalApi().sessionApi;
+  const [poll, setPoll] = useState(undefined);
+  const [pollStarted, setPollStarted] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    const sessionStart = await sessionApi.sessionStartCreate(
-      new SessionStart(session.id, questions[0].id),
+    const response = await sessionApi.sessionStartCreate(
+      new SessionStart(session.id, questions[questionIndex].id),
     );
-    console.log(sessionStart);
+    setPoll(response);
+    setPollStarted(true);
   };
 
   return (
     <FormPaper>
-      <FormBox>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Start Poll
-        </Button>
-      </FormBox>
+      {!isLoading && (
+        <FormBox>
+          {!pollStarted && (
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+              Start Poll
+            </Button>
+          )}
+
+          {pollStarted && (
+            <DisplayingQuestion question={questions[questionIndex]} />
+          )}
+
+          {pollStarted && questionIndex < questions.length - 1 && (
+            <NextQuestionButton
+              questionIndex={questionIndex}
+              setQuestionIndex={setQuestionIndex}
+              poll={poll}
+              questions={questions}
+              setIsLoading={setIsLoading}
+            />
+          )}
+
+          {pollStarted && (
+            <StopAcceptingAnswersButton
+              poll={poll}
+              setIsLoading={setIsLoading}
+            />
+          )}
+        </FormBox>
+      )}
     </FormPaper>
   );
 };

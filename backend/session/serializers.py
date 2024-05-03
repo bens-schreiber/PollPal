@@ -70,6 +70,12 @@ class SessionStartSerializer(serializers.Serializer):
     session = serializers.PrimaryKeyRelatedField(queryset=Session.objects.all())
     question = serializers.PrimaryKeyRelatedField(queryset=Question.objects.all())
 
+    def is_session_valid(self):
+        session: Session = self.validated_data["session"]
+        if Poll.objects.filter(session=session).exists():
+            raise serializers.ValidationError("Session already has a poll.")
+        return session
+
     def create(self, validated_data):
         """Creates a Poll object from the validated data and saves it in the database"""
         question: Question = validated_data.pop("question")
