@@ -1,8 +1,7 @@
-# PollPalApi.Session
+# PollPalApi.PollNextQuestion
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | 
 **poll** | **Number** |  | 
-**label** | **String** |  | 
+**question** | **Number** |  | 

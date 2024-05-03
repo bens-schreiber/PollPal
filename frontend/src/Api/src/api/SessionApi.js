@@ -14,6 +14,7 @@
  */
 import ApiClient from "../ApiClient";
 import Session from '../model/Session';
+import SessionStart from '../model/SessionStart';
 
 /**
 * Session service.
@@ -45,13 +46,15 @@ export default class SessionApi {
     /**
      * @param {module:model/Session} body 
      * @param {Number} id 
+     * @param {Number} poll 
      * @param {String} label 
      * @param {Number} id 
+     * @param {Number} poll 
      * @param {String} label 
      * @param {module:api/SessionApi~sessionCreateCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    sessionCreate(body, id, label, id, label, callback) {
+    sessionCreate(body, id, poll, label, id, poll, label, callback) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -62,6 +65,10 @@ export default class SessionApi {
       if (id === undefined || id === null) {
         throw new Error("Missing the required parameter 'id' when calling sessionCreate");
       }
+      // verify the required parameter 'poll' is set
+      if (poll === undefined || poll === null) {
+        throw new Error("Missing the required parameter 'poll' when calling sessionCreate");
+      }
       // verify the required parameter 'label' is set
       if (label === undefined || label === null) {
         throw new Error("Missing the required parameter 'label' when calling sessionCreate");
@@ -69,6 +76,10 @@ export default class SessionApi {
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
         throw new Error("Missing the required parameter 'id' when calling sessionCreate");
+      }
+      // verify the required parameter 'poll' is set
+      if (poll === undefined || poll === null) {
+        throw new Error("Missing the required parameter 'poll' when calling sessionCreate");
       }
       // verify the required parameter 'label' is set
       if (label === undefined || label === null) {
@@ -85,7 +96,7 @@ export default class SessionApi {
         
       };
       let formParams = {
-        'id': id,'label': label,'id': id,'label': label
+        'id': id,'poll': poll,'label': label,'id': id,'poll': poll,'label': label
       };
 
       let authNames = ['basicAuth', 'cookieAuth'];
@@ -108,15 +119,60 @@ export default class SessionApi {
      */
 
     /**
-     * @param {Number} sessionId 
+     * @param {Number} id 
      * @param {module:api/SessionApi~sessionDestroyCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    sessionDestroy(sessionId, callback) {
+    sessionDestroy(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling sessionDestroy");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/session/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the sessionEndDestroy operation.
+     * @callback moduleapi/SessionApi~sessionEndDestroyCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400.
+     * @param {Number} sessionId 
+     * @param {module:api/SessionApi~sessionEndDestroyCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    sessionEndDestroy(sessionId, callback) {
       
       let postBody = null;
       // verify the required parameter 'sessionId' is set
       if (sessionId === undefined || sessionId === null) {
-        throw new Error("Missing the required parameter 'sessionId' when calling sessionDestroy");
+        throw new Error("Missing the required parameter 'sessionId' when calling sessionEndDestroy");
       }
 
       let pathParams = {
@@ -138,7 +194,7 @@ export default class SessionApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/api/session/{session_id}', 'DELETE',
+        '/api/session/{session_id}/end', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -179,6 +235,72 @@ export default class SessionApi {
 
       return this.apiClient.callApi(
         '/api/session/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the sessionStartCreate operation.
+     * @callback moduleapi/SessionApi~sessionStartCreateCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/SessionStart{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Creates a poll for the session with the provided question and answer.
+     * @param {module:model/SessionStart} body 
+     * @param {Number} session 
+     * @param {Number} question 
+     * @param {Number} session 
+     * @param {Number} question 
+     * @param {module:api/SessionApi~sessionStartCreateCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    sessionStartCreate(body, session, question, session, question, callback) {
+      
+      let postBody = body;
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling sessionStartCreate");
+      }
+      // verify the required parameter 'session' is set
+      if (session === undefined || session === null) {
+        throw new Error("Missing the required parameter 'session' when calling sessionStartCreate");
+      }
+      // verify the required parameter 'question' is set
+      if (question === undefined || question === null) {
+        throw new Error("Missing the required parameter 'question' when calling sessionStartCreate");
+      }
+      // verify the required parameter 'session' is set
+      if (session === undefined || session === null) {
+        throw new Error("Missing the required parameter 'session' when calling sessionStartCreate");
+      }
+      // verify the required parameter 'question' is set
+      if (question === undefined || question === null) {
+        throw new Error("Missing the required parameter 'question' when calling sessionStartCreate");
+      }
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        'session': session,'question': question,'session': session,'question': question
+      };
+
+      let authNames = ['basicAuth', 'cookieAuth'];
+      let contentTypes = ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
+      let accepts = ['application/json'];
+      let returnType = SessionStart;
+
+      return this.apiClient.callApi(
+        '/api/session/start', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

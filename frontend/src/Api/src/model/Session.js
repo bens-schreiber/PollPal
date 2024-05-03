@@ -25,10 +25,12 @@ export default class Session {
    * @alias module:model/Session
    * @class
    * @param id {Number} 
+   * @param poll {Number} 
    * @param label {String} 
    */
-  constructor(id, label) {
+  constructor(id, poll, label) {
     this.id = id;
+    this.poll = poll;
     this.label = label;
   }
 
@@ -44,6 +46,8 @@ export default class Session {
       obj = obj || new Session();
       if (data.hasOwnProperty('id'))
         obj.id = ApiClient.convertToType(data['id'], 'Number');
+      if (data.hasOwnProperty('poll'))
+        obj.poll = ApiClient.convertToType(data['poll'], 'Number');
       if (data.hasOwnProperty('label'))
         obj.label = ApiClient.convertToType(data['label'], 'String');
     }
@@ -55,6 +59,11 @@ export default class Session {
  * @member {Number} id
  */
 Session.prototype.id = undefined;
+
+/**
+ * @member {Number} poll
+ */
+Session.prototype.poll = undefined;
 
 /**
  * @member {String} label

@@ -1,8 +1,7 @@
-# PollPalApi.Session
+# PollPalApi.PollSetAcceptingAnswers
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | 
 **poll** | **Number** |  | 
-**label** | **String** |  | 
+**isAcceptingAnswers** | **Boolean** |  | 

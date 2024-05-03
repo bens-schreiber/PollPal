@@ -13,7 +13,16 @@
  *
  */
 import ApiClient from './ApiClient';
+import PatchedPollSetAcceptingAnswers from './model/PatchedPollSetAcceptingAnswers';
+import PollNextQuestion from './model/PollNextQuestion';
+import PollSetAcceptingAnswers from './model/PollSetAcceptingAnswers';
+import PollSubmitResponse from './model/PollSubmitResponse';
+import QuestionCreate from './model/QuestionCreate';
+import QuestionCreateAnswerInput from './model/QuestionCreateAnswerInput';
 import Session from './model/Session';
+import SessionStart from './model/SessionStart';
+import PollApi from './api/PollApi';
+import QuestionApi from './api/QuestionApi';
 import SessionApi from './api/SessionApi';
 
 /**
@@ -55,10 +64,64 @@ export {
     ApiClient,
 
     /**
+     * The PatchedPollSetAcceptingAnswers model constructor.
+     * @property {module:model/PatchedPollSetAcceptingAnswers}
+     */
+    PatchedPollSetAcceptingAnswers,
+
+    /**
+     * The PollNextQuestion model constructor.
+     * @property {module:model/PollNextQuestion}
+     */
+    PollNextQuestion,
+
+    /**
+     * The PollSetAcceptingAnswers model constructor.
+     * @property {module:model/PollSetAcceptingAnswers}
+     */
+    PollSetAcceptingAnswers,
+
+    /**
+     * The PollSubmitResponse model constructor.
+     * @property {module:model/PollSubmitResponse}
+     */
+    PollSubmitResponse,
+
+    /**
+     * The QuestionCreate model constructor.
+     * @property {module:model/QuestionCreate}
+     */
+    QuestionCreate,
+
+    /**
+     * The QuestionCreateAnswerInput model constructor.
+     * @property {module:model/QuestionCreateAnswerInput}
+     */
+    QuestionCreateAnswerInput,
+
+    /**
      * The Session model constructor.
      * @property {module:model/Session}
      */
     Session,
+
+    /**
+     * The SessionStart model constructor.
+     * @property {module:model/SessionStart}
+     */
+    SessionStart,
+
+    /**
+    * The PollApi service constructor.
+    * @property {module:api/PollApi}
+    */
+    PollApi,
+
+    /**
+    * The QuestionApi service constructor.
+    * @property {module:api/QuestionApi}
+    */
+    QuestionApi,
 
     /**
     * The SessionApi service constructor.

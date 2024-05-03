@@ -1,18 +1,17 @@
-# PollPalApi.SessionApi
+# PollPalApi.PollApi
 
 All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**sessionCreate**](SessionApi.md#sessionCreate) | **POST** /api/session/ | 
-[**sessionDestroy**](SessionApi.md#sessionDestroy) | **DELETE** /api/session/{id} | 
-[**sessionEndDestroy**](SessionApi.md#sessionEndDestroy) | **DELETE** /api/session/{session_id}/end | 
-[**sessionList**](SessionApi.md#sessionList) | **GET** /api/session/ | 
-[**sessionStartCreate**](SessionApi.md#sessionStartCreate) | **POST** /api/session/start | 
+[**pollAnswerRetrieve**](PollApi.md#pollAnswerRetrieve) | **GET** /api/poll/{poll_id}/answer | 
+[**pollNextQuestionCreate**](PollApi.md#pollNextQuestionCreate) | **POST** /api/poll/next-question | 
+[**pollSetAcceptingAnswerPartialUpdate**](PollApi.md#pollSetAcceptingAnswerPartialUpdate) | **PATCH** /api/poll/set-accepting-answer | 
+[**pollSubmitResponseUpdate**](PollApi.md#pollSubmitResponseUpdate) | **PUT** /api/poll/submit-response | 
 
-<a name="sessionCreate"></a>
-# **sessionCreate**
-> Session sessionCreate(body, id, poll, label, id, poll, label)
+<a name="pollAnswerRetrieve"></a>
+# **pollAnswerRetrieve**
+> pollAnswerRetrieve(pollId)
 
 
 
@@ -31,16 +30,66 @@ cookieAuth.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //cookieAuth.apiKeyPrefix = 'Token';
 
-let apiInstance = new PollPalApi.SessionApi();
-let body = new PollPalApi.Session(); // Session | 
-let id = 56; // Number | 
-let poll = 56; // Number | 
-let label = "label_example"; // String | 
-let id = 56; // Number | 
-let poll = 56; // Number | 
-let label = "label_example"; // String | 
+let apiInstance = new PollPalApi.PollApi();
+let pollId = 56; // Number | 
 
-apiInstance.sessionCreate(body, id, poll, label, id, poll, label, (error, data, response) => {
+apiInstance.pollAnswerRetrieve(pollId, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pollId** | **Number**|  | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+<a name="pollNextQuestionCreate"></a>
+# **pollNextQuestionCreate**
+> PollNextQuestion pollNextQuestionCreate(body, poll, question, poll, question)
+
+
+
+### Example
+```javascript
+import {PollPalApi} from 'poll_pal_api';
+let defaultClient = PollPalApi.ApiClient.instance;
+// Configure HTTP basic authorization: basicAuth
+let basicAuth = defaultClient.authentications['basicAuth'];
+basicAuth.username = 'YOUR USERNAME';
+basicAuth.password = 'YOUR PASSWORD';
+
+// Configure API key authorization: cookieAuth
+let cookieAuth = defaultClient.authentications['cookieAuth'];
+cookieAuth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//cookieAuth.apiKeyPrefix = 'Token';
+
+let apiInstance = new PollPalApi.PollApi();
+let body = new PollPalApi.PollNextQuestion(); // PollNextQuestion | 
+let poll = 56; // Number | 
+let question = 56; // Number | 
+let poll = 56; // Number | 
+let question = 56; // Number | 
+
+apiInstance.pollNextQuestionCreate(body, poll, question, poll, question, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -53,17 +102,15 @@ apiInstance.sessionCreate(body, id, poll, label, id, poll, label, (error, data, 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Session**](Session.md)|  | 
- **id** | **Number**|  | 
+ **body** | [**PollNextQuestion**](PollNextQuestion.md)|  | 
  **poll** | **Number**|  | 
- **label** | **String**|  | 
- **id** | **Number**|  | 
+ **question** | **Number**|  | 
  **poll** | **Number**|  | 
- **label** | **String**|  | 
+ **question** | **Number**|  | 
 
 ### Return type
 
-[**Session**](Session.md)
+[**PollNextQuestion**](PollNextQuestion.md)
 
 ### Authorization
 
@@ -74,9 +121,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
  - **Accept**: application/json
 
-<a name="sessionDestroy"></a>
-# **sessionDestroy**
-> sessionDestroy(id)
+<a name="pollSetAcceptingAnswerPartialUpdate"></a>
+# **pollSetAcceptingAnswerPartialUpdate**
+> PollSetAcceptingAnswers pollSetAcceptingAnswerPartialUpdate(opts)
 
 
 
@@ -95,114 +142,15 @@ cookieAuth.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //cookieAuth.apiKeyPrefix = 'Token';
 
-let apiInstance = new PollPalApi.SessionApi();
-let id = 56; // Number | 
-
-apiInstance.sessionDestroy(id, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-});
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-<a name="sessionEndDestroy"></a>
-# **sessionEndDestroy**
-> sessionEndDestroy(sessionId)
-
-
-
-Deletes a Poll from a session. If there is no Poll, return 400. If the poll is accepting answers, return 400.
-
-### Example
-```javascript
-import {PollPalApi} from 'poll_pal_api';
-let defaultClient = PollPalApi.ApiClient.instance;
-// Configure HTTP basic authorization: basicAuth
-let basicAuth = defaultClient.authentications['basicAuth'];
-basicAuth.username = 'YOUR USERNAME';
-basicAuth.password = 'YOUR PASSWORD';
-
-// Configure API key authorization: cookieAuth
-let cookieAuth = defaultClient.authentications['cookieAuth'];
-cookieAuth.apiKey = 'YOUR API KEY';
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//cookieAuth.apiKeyPrefix = 'Token';
-
-let apiInstance = new PollPalApi.SessionApi();
-let sessionId = 56; // Number | 
-
-apiInstance.sessionEndDestroy(sessionId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-});
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionId** | **Number**|  | 
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-<a name="sessionList"></a>
-# **sessionList**
-> [Session] sessionList()
-
-
-
-### Example
-```javascript
-import {PollPalApi} from 'poll_pal_api';
-let defaultClient = PollPalApi.ApiClient.instance;
-// Configure HTTP basic authorization: basicAuth
-let basicAuth = defaultClient.authentications['basicAuth'];
-basicAuth.username = 'YOUR USERNAME';
-basicAuth.password = 'YOUR PASSWORD';
-
-// Configure API key authorization: cookieAuth
-let cookieAuth = defaultClient.authentications['cookieAuth'];
-cookieAuth.apiKey = 'YOUR API KEY';
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//cookieAuth.apiKeyPrefix = 'Token';
-
-let apiInstance = new PollPalApi.SessionApi();
-apiInstance.sessionList((error, data, response) => {
+let apiInstance = new PollPalApi.PollApi();
+let opts = { 
+  'body': new PollPalApi.PatchedPollSetAcceptingAnswers(), // PatchedPollSetAcceptingAnswers | 
+  'poll': 56, // Number | 
+  'isAcceptingAnswers': true, // Boolean | 
+  'poll': 56, // Number | 
+  'isAcceptingAnswers': true // Boolean | 
+};
+apiInstance.pollSetAcceptingAnswerPartialUpdate(opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -212,11 +160,18 @@ apiInstance.sessionList((error, data, response) => {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**PatchedPollSetAcceptingAnswers**](PatchedPollSetAcceptingAnswers.md)|  | [optional] 
+ **poll** | **Number**|  | [optional] 
+ **isAcceptingAnswers** | **Boolean**|  | [optional] 
+ **poll** | **Number**|  | [optional] 
+ **isAcceptingAnswers** | **Boolean**|  | [optional] 
 
 ### Return type
 
-[**[Session]**](Session.md)
+[**PollSetAcceptingAnswers**](PollSetAcceptingAnswers.md)
 
 ### Authorization
 
@@ -224,16 +179,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
  - **Accept**: application/json
 
-<a name="sessionStartCreate"></a>
-# **sessionStartCreate**
-> SessionStart sessionStartCreate(body, session, question, session, question)
+<a name="pollSubmitResponseUpdate"></a>
+# **pollSubmitResponseUpdate**
+> PollSubmitResponse pollSubmitResponseUpdate(body, poll, answer, poll, answer)
 
 
-
-Creates a poll for the session with the provided question and answer.
 
 ### Example
 ```javascript
@@ -250,14 +203,14 @@ cookieAuth.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //cookieAuth.apiKeyPrefix = 'Token';
 
-let apiInstance = new PollPalApi.SessionApi();
-let body = new PollPalApi.SessionStart(); // SessionStart | 
-let session = 56; // Number | 
-let question = 56; // Number | 
-let session = 56; // Number | 
-let question = 56; // Number | 
+let apiInstance = new PollPalApi.PollApi();
+let body = new PollPalApi.PollSubmitResponse(); // PollSubmitResponse | 
+let poll = 56; // Number | 
+let answer = 56; // Number | 
+let poll = 56; // Number | 
+let answer = 56; // Number | 
 
-apiInstance.sessionStartCreate(body, session, question, session, question, (error, data, response) => {
+apiInstance.pollSubmitResponseUpdate(body, poll, answer, poll, answer, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -270,15 +223,15 @@ apiInstance.sessionStartCreate(body, session, question, session, question, (erro
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SessionStart**](SessionStart.md)|  | 
- **session** | **Number**|  | 
- **question** | **Number**|  | 
- **session** | **Number**|  | 
- **question** | **Number**|  | 
+ **body** | [**PollSubmitResponse**](PollSubmitResponse.md)|  | 
+ **poll** | **Number**|  | 
+ **answer** | **Number**|  | 
+ **poll** | **Number**|  | 
+ **answer** | **Number**|  | 
 
 ### Return type
 
-[**SessionStart**](SessionStart.md)
+[**PollSubmitResponse**](PollSubmitResponse.md)
 
 ### Authorization
 
